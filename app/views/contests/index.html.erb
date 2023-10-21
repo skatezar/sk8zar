@@ -1,0 +1,79 @@
+<div class="container">
+  <h2 class="text-center" style="font-weight:bold;">
+    Skatezar Game of Skate
+  </h2>
+  <% if 32 - Contest.all.length > 0 %>
+    <p style="color: red;" class="text-center">
+      There are <%= 32 - Contest.all.length %> spots left
+    </p>
+  <% else %>
+    <p style="color: red;" class="text-center">
+      There are no spots left -  if you register you will be added to the reserve (its very likely that at least 5 people will not show up)
+    </p>
+  <% end %>
+  <p>
+
+  </p>
+  <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        What is this?
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p>
+      We are organising a jam session with good vibes, music and lots of skaters to get the skateboarding community in Vienna closer.
+    </p>
+    <p>
+      We will organise one big game of skate with 32 participants and 2 best trick sessions (on the 3 set and on a curb that we will bring)
+    </p>
+    <p style="font-size: 30px; font-weight:bold;" class="text-center">Sunday the 25th July at 16:00 at Donauinsel!</p>
+    <a href="https://www.google.com/maps/dir//Donaustadt,+1220+Vienna/@48.2288909,16.4094527,213m/data=!3m1!1e3!4m9!4m8!1m0!1m5!1m1!1s0x476d06e3bc097c6f:0x42093634d46c77db!2m2!1d16.4099082!2d48.2287036!3e2" target="_blank">
+    <span style="color:blue;">
+        Click here for the location </a></p>
+      </span>
+
+       <a href="https://www.instagram.com/tv/CRhN14SnHjD/" target="_blank">
+      <span style="color:blue;">
+        Click here for the video of our last contest!</a></p>
+      </span>
+
+  </div>
+</div>
+
+  <div class="d-flex" >
+    <%= link_to "+ register", new_contest_path, class: "btn btn-new" %>
+  </div>
+
+  <br>
+
+  <h6 class="text-center">
+    Participants (by instagram username):
+  </h6>
+  <hr>
+  <% i = 1 %>
+  <% @participants.each do |participant| %>
+  <div class="text-center">
+    <%= participant.username %> - <%= i %>
+    <% if i > 32 %>
+    (reserve)
+    <% end %>
+    <% i = i + 1 %>
+  </div>
+  <% end %>
+
+  <br>
+  <br>
+  <hr>
+
+  <br>
+  <!--
+
+
+  <p style="font-weight:bold;">Lets get it! Any questions, DM us on instagram!</p>
+</div>

@@ -1,0 +1,6 @@
+meta_product_name: "SKATEZAR"
+meta_title: "SKATEZAR: Buy & Sell Skateboards"
+meta_description: "Skatezar is a community-driven reselling market exclusively for skateboarders. We want to maket
+skateboarding items cheaper and connect local skate communities. "
+meta_image: "logo.png" # should exist in `app/assets/images/`
+twitter_account: "@skatezar"   # required for Twitter Cards

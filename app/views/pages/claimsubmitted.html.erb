@@ -1,0 +1,10 @@
+<div class="container">
+  <h3 class="text-center">THANK YOU!</h3>
+  <p class="text-center">We will review your claim and contact you within 24 hours!</p>
+  <%= link_to "VIEW YOUR CLAIMS", myclaims_path, class: "btn btn-new d-flex justify-content-center" %>
+
+  <br>
+  <% if current_user.instagram.present? == false %>
+<p style="color:red;">To make things quicker, please add your instagram <%=link_to "HERE", edit_my_profile_path(current_user), class: "btn btn-new" %></p>
+  <% end %>
+</div>

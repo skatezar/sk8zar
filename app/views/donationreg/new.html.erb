@@ -1,0 +1,16 @@
+<div class="container d-flex  justify-content-center">
+
+  <%= form_for [ @donation, @donationreg ],  url: donation_donationreg_index_path do |f| %>
+  <p class="text-center">Your instagram or name: </p>
+    <div class="container">
+       <p readonly style="position:absolute;" class="m-1">@</p>
+        <%= f.text_field :content, placeholder: "skatezar", class: "pl-3" %>
+    </div>
+    <br>
+    <div class="container d-flex justify-content-center">
+      <%= f.submit "Submit registration", class: "btn btn-new" %>
+    </div>
+
+  <% end %>
+
+</div>

@@ -1,0 +1,89 @@
+<div class="container">
+  <h5 class="text-center"> Skate Contest Calendar </h5>
+
+   <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        What is this?
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p>
+      Here you can find skateboarding contests that are happening near you.
+      <!-- you can also organise individual skate sessions to meet people near you! -->
+    </p>
+  </div>
+</div>
+
+
+
+<br>
+<div class="d-flex" >
+    <%= link_to "+ add contest", new_skateevent_path, class: "btn btn-new" %>
+  </div>
+</div>
+
+<br>
+<p>
+  <strong class="container">Location Filter</strong>
+</p>
+
+  <div class="container">
+    <%= simple_form_for :eventsearch, url: skateevents_path, method: "GET" do |f| %>
+      <div class="card">
+          <% if params[:eventsearch].present? %>
+            <% if params[:eventsearch][:location] == "" %>
+              <%= f.text_field :location,  :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+            <% else %>
+              <%= f.text_field :location, :value => "#{params[:eventsearch][:location]}", :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+            <% end %>
+          <% else %>
+          <div id="map" style="display:none;"></div>
+          <%= f.text_field :location, :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+          <% end %>
+         <br>
+      </div>
+    <% if params[:eventsearch].present? %>
+      <div class="text-center">
+        <%= link_to "Reset Filters", skateevents_path  %>
+      </div>
+    <% end %>
+    <div style="width:200px; display: block; margin:auto;" >
+      <%= f.submit "Search", class: "btn sell-link w-100 mt-4 ", data: { disable_with: "Searching..." }%>
+    </div>
+<% end %>
+</div>
+<div class="container mt-2 d-flex justify-content-center">
+  <div class="row d-flex justify-content-around" >
+    <% @skateevents.order('date2 ASC').each do |event| %>
+    <% if event.date2 > DateTime.now %>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+          <a href="<%= skateevent_path(event) %>" class="style-fix" >
+             <div class="card card-sizing link-div" >
+              <div class="card-category-img" style="background-image: url(<%= cl_image_path event.pic1.key, height: 300, crop: :fill %>)"></div>
+                <% if event.date2.month == DateTime.now.month %>
+                 <p style="color: red; font-size: 24px; position: absolute; margin-top: 23px;"class="text-center">THIS MONTH</p>
+                <% end %>
+                <p class="item-title text-center mt-2 style-fix" > <%= event.name_title %> </p>
+                <p class="sub-text text-center style-fix pl-2 pr-2" ><%= event.date2.strftime("%d %B %Y") %></p>
+                <p class="sub-text text-center style-fix pl-2 pr-2" style="margin-top: -10px;"><%= event.location %> </p>
+            </div>
+          </a>
+          <br>
+          <br>
+        </div>
+      <% end %>
+        <% end %>
+
+      </div>
+</div>
+
+
+<div class="d-flex justify-content-around" data-target="infinite-scroll.pagination">
+  <%== pagy_nav @pagy if @pagy.pages > 1%>
+</div>

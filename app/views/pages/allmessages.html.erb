@@ -1,0 +1,47 @@
+<% if current_user.admin == true %>
+<div class="container">
+
+<% i = 0 %>
+<% @messages.order('created_at DESC').each do |msg| %>
+  <% i = i + 1 %>
+  <% if i < 30 %>
+  <br>
+  <div class="msg-box p-3 container">
+    <p class="text-center">
+      <strong>
+      <%= msg.content %>
+      </strong>
+    </p>
+
+    <p class="text-center">
+      <%= msg.item.title %>
+      <br>
+      <strong style="color: blue;">
+        <%= link_to 'item', item_path(msg.item) %>
+      </strong>
+    </p>
+    <p>
+      sender: <%= msg.user.email %>
+      <% if msg.user.instagram.present? %>
+        <%= link_to "https://www.instagram.com/#{msg.user.instagram}", target: "_blank" do %>
+          <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+        <% end %>
+      <% end %>
+    </p>
+
+    <div class="card-category-img" style="background-image: url(<%= cl_image_path msg.item.photo.key, height: 500, crop: :fill %>)"></div>
+    </div>
+    </div>
+<% end %>
+<% end %>
+
+
+<% end %>
+
+
+<style type="text/css">
+  .msg-box{
+    background-color: white;
+    border: 1px solid black;
+  }
+</style>

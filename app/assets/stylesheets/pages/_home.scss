@@ -1,0 +1,54 @@
+// Specific CSS for your home-page
+ .card-category-img {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+
+}
+
+.card-sizing{
+  width:150px;
+  max-width: 200px;
+  min-height: 250px;
+  max-height: 250px;
+
+}
+
+.item-title{
+  font-size:13px;
+}
+
+.sub-text{
+  font-size:12px;
+}
+
+.style-fix{
+  color: black;
+}
+
+.style-fix:hover{
+  text-decoration: none;
+}
+
+.container{
+  color: black;
+}
+
+.link-div{
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.link-div:hover{
+  border: 1px solid black;
+  opacity: 0.5;
+}

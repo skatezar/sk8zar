@@ -1,0 +1,25 @@
+// Import your components CSS files here.
+@import "alert";
+@import "avatar";
+@import "navbar";
+@import "footer";
+@import "form";
+@import "rectangle";
+@import "filter";
+@import "chatroom";
+
+  .sub-heading{
+    font-weight:bold;
+  }
+
+  .generic-black-btn{
+    padding: 7px 10px;
+    background-color: black;
+    color: white;
+    border-radius: 3px;
+  }
+  .generic-black-btn:hover{
+    color: white;
+    text-decoration: none;
+    opacity: 0.5;
+  }

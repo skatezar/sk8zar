@@ -1,0 +1,158 @@
+.item-show{
+    width: 800px;
+    height:600px;
+  }
+  .image{
+    flex-grow: 1;
+    background-image: center;
+    background: no-repeat;
+    background-size: 100%;
+  }
+  .text{
+    width: 200px;
+  }
+  .textbox-1{
+    height:50%;
+
+  }
+  .desc-txt{
+    font-size:21px;
+
+  }
+  .subtitle{
+    color: black;
+    font-size: 12px;
+  }
+  .msg-button{
+    height:40px;
+    border: 1px solid black;
+    background-color: black;
+    color:white;
+    border-radius: 1px;
+    width: 100%
+  }
+  .price{
+    color:#D1201C;
+    font-size:21px;
+  }
+  .profile-card{
+    background-color:white;
+    border: 1px solid lightgrey;
+    padding: 5px;
+  }
+  .fa-instagram:hover{
+    opacity: 0.5;
+  }
+
+
+.msg-modal-fix{
+    height:30vh;
+  }
+
+@media (min-width: 768px){
+.msg-modal-fix{
+    height:30vh;
+  }
+}
+@media (max-width: 768px){
+.msg-modal-fix{
+    height:30vh;
+  }
+}
+
+.background-grey{
+  background-color:#F4F4F4;
+}
+
+.msg-textarea{
+  width:100%;
+  height:150px;
+  border: 1px solid lightgrey;
+}
+
+.learn-more{
+  font-size:13px;
+  color: black;
+}
+.btn-send-msg{
+  background-color: #F4F4F4;
+  width: 300px;
+  color: lightgrey;
+  font-style: bold;
+  border: 1px solid lightgrey;
+}
+.btn-send-msg:hover{
+  opacity: 0.5;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.h-100{
+  max-height: 60vh;
+}
+.overflowhid{
+  overflow: hidden;
+}
+.title{
+  font-size:24px;
+  font-weight:bold;
+}
+
+
+
+.chatroom_messages_content input{
+    color: red;
+  }
+  .send-msg-btn{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    width: 100%;
+  }
+  .vertical-align{
+    display: flex;
+    align-content: center;
+  }
+
+  .msg-text-area{
+    font-size:16px;
+    padding-left: 5px;
+    width: 100%;
+
+    min-height:100px;
+  }
+
+  .sign-in-alert{
+    color: black;
+    margin-top:100px;
+  }
+
+  .msg-button-not-logged-in{
+    padding:10px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+  .msg-button-not-logged-in:hover{
+    color: white;
+    opacity: 0.5;
+    text-decoration: none;
+  }

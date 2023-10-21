@@ -1,0 +1,293 @@
+<script type="text/javascript">
+  window.scrollTo(0,document.body.scrollHeight);
+</script>
+
+  <div class="back-button d-flex justify-content-between">
+    <p class="mt-2" style="font-size:22px; font-weight:bold; margin-left:20px; color:black;">
+      <%= link_to '<', chatrooms_path %>
+    </p>
+  </div>
+
+<% if current_user.instagram.present? == false %>
+  <p class="text-center mt-3"><%= link_to "Add your instagram to increase your chances of selling", edit_my_profile_path, target: "_blank", class: " " %></p>
+<% end %>
+
+<div class="container">
+  <!-- dropdown btn for item -->
+  <p>
+  <a class="btn d-flex btn-white justify-content-between" data-toggle="collapse" href="#collapseItem" role="button" aria-expanded="false" aria-controls="collapseItem">
+  <span style="font-size:18px;">
+     Item: <%=   @chatroom.item.title %>
+  </span>
+  <span>
+    +
+  </span>
+  </a>
+</p>
+
+<!-- things within item dropdown -->
+<div class="collapse" id="collapseItem">
+  <div class="card card-body">
+    <div class="container">
+      <div class="card-product d-flex "  style="height: auto;">
+      <img class="p-1" alt="avatar" src="<%= cl_image_path @chatroom.item.photo.key %>" />
+
+      <div class="card-product-infos">
+
+      <h4 class=" ">
+        <%= link_to @chatroom.item.title, item_path(@chatroom.item) %>
+      </h4>
+        <p><%= @chatroom.item.location %></p>
+        <p>
+          <%= @chatroom.item.created_at.strftime("%d %B %Y") %>
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- dropdown for contact info -->
+
+  <p>
+  <a class="btn d-flex btn-white justify-content-between" data-toggle="collapse" href="#collapseContactInfo" role="button" aria-expanded="false" aria-controls="collapseContactInfo" style="background-color:  #8a0303;">
+  <span style="font-size:18px; color:white;">
+    Getting no answer? click here
+  </span>
+  <span style="color:white;">
+    +
+  </span>
+  </a>
+</p>
+
+<!-- things within item dropdown -->
+<div class="collapse" id="collapseContactInfo">
+  <div class="card card-body">
+    <div class="container">
+      <div class="card-product d-flex "  style="height: auto;">
+      <div class="card-product-infos">
+        <!-- if current user is buyer -->
+        <% if current_user == @chatroom.user %>
+
+            <p>
+              Seller email: <span style="font-weight:bold;"><%= @chatroom.item.user.email %></span>
+            </p>
+            <p>
+              Seller instagram:
+              <span style="font-weight:bold;">
+              <% if @chatroom.item.user.instagram.present? %>
+                <%= @chatroom.item.user.instagram %>
+                -
+                <%= link_to "https://www.instagram.com/#{@chatroom.item.user.instagram}", target: "_blank" do %>
+                  <i class="fab fa-instagram mt-2" style="font-size:23px;"></i>
+                <% end %>
+
+              <% else %>
+                instagram not available
+              <% end %>
+              </span>
+
+            </p>
+
+
+        <% else %>
+          <p>
+            Buyer email: <span style="font-weight:bold;"> <%= @chatroom.user.email %></span>
+          </p>
+          <p>
+            Buyer instagram:
+            <span style="font-weight:bold;">
+              <% if @chatroom.user.instagram.present? %>
+                <%= @chatroom.user.instagram %>
+                -
+                <%= link_to "https://www.instagram.com/#{@chatroom.user.instagram}", target: "_blank" do %>
+                  <i class="fab fa-instagram mt-2" style="font-size:23px;"></i>
+                <% end %>
+
+              <% else %>
+                instagram not available
+              <% end %>
+            </span>
+          </p>
+        <% end %>
+        <br>
+        <p>don't worry - only you and the buyer/seller can see the above, noone else.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- dropdown and button for seller/buyer -->
+<p>
+  <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <% if current_user == @chatroom.user %>
+        <% if @chatroom.item.user.username.present? %>
+          <span style="font-size: 18px;" class="text-center ">
+            Seller: <%= @chatroom.item.user.username %>
+          </span>
+        <% else %>
+        <span style="font-size: 18px;" class="text-center ">
+           Seller: <%= @chatroom.item.user.email.match(/[^@]*/) %>
+        </span>
+        <% end %>
+      <% else %>
+      <% if @chatroom.user.username.present? %>
+          <span style="font-size: 18px;" class="text-center mt-2">
+            Buyer: <%= @chatroom.user.username %>
+          </span>
+        <% else %>
+        <span style="font-size: 18px;" class="text-center mt-2">
+           Buyer: <%= @chatroom.user.email.match(/[^@]*/) %>
+        </span>
+        <% end %>
+      <% end %>
+    <span>
+      <% if current_user == @chatroom.user %>
+        <% if @chatroom.item.user.instagram.present? %>
+          <i class="fab fa-instagram mt-2 text-center" style="font-size:32px;"></i>
+        <% else %>
+          <span class="mt-3">+</span>
+        <% end %>
+      <% else %>
+        <% if @chatroom.user.instagram.present? %>
+          <i class="fab fa-instagram mt-2 text-center" style="font-size:32px;"></i>
+        <% else %>
+           <span class="mt-3">+</span>
+        <% end %>
+      <% end %>
+    </span>
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+      <% if current_user == @chatroom.item.user %>
+        <div class="container">
+              <div class="card-product d-flex justify-content-center"  style="height: auto;">
+                   <div class="card-product-infos">
+                    <p style="font-size: 18px;" class="text-center">
+                      <% if @chatroom.user.username.present? %>
+                        <p style="font-size: 18px;" class="text-center">
+                            Buyer:
+                            <%= link_to @chatroom.user.username, show_user_path(@chatroom.user.id)  %>
+                          </p>
+                        <% else %>
+
+                        <p style="font-size: 18px;" class="text-center">
+                        Buyer:
+                        <%= link_to @chatroom.user.email.match(/[^@]*/), show_user_path(@chatroom.user.id) %>
+                        </p>
+                      <% end %>
+                    </p>
+                  <p class="text-center"><%= @chatroom.item.location %></p>
+                  <% if @chatroom.user.instagram.present? %>
+                  <div class="d-flex justify-content-center">
+                    <%= link_to "https://www.instagram.com/#{@chatroom.user.instagram}", target: "_blank" do %>
+                      <i class="fab fa-instagram mt-2 text-center" style="font-size:42px;"></i>
+                  <% end %>
+                  </div>
+                </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="container">
+              <div class="card-product d-flex justify-content-center"  style="height: auto;">
+                   <div class="card-product-infos">
+                    <p style="font-size: 18px;" class="text-center">
+                      <% if @chatroom.item.user.username.present? %>
+                        <p style="font-size: 18px;" class="text-center">
+                            Seller:
+                            <%= link_to @chatroom.item.user.username, show_user_path(@chatroom.item.user.id)  %>
+                          </p>
+                        <% else %>
+
+                        <p style="font-size: 18px;" class="text-center">
+                        Seller:
+                        <%= link_to @chatroom.item.user.email.match(/[^@]*/), show_user_path(@chatroom.item.user.id) %>
+                        </p>
+                      <% end %>
+                    </p>
+                  <p class="text-center"><%= @chatroom.item.location %></p>
+                  <% if @chatroom.item.user.instagram.present? %>
+                  <div class="d-flex justify-content-center">
+                    <%= link_to "https://www.instagram.com/#{@chatroom.item.user.instagram}", target: "_blank" do %>
+                      <i class="fab fa-instagram mt-2 text-center" style="font-size:42px;"></i>
+                  <% end %>
+                  </div>
+                </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+  </div>
+</div>
+</div></div>
+</div>
+
+<div class="container">
+
+
+<br>
+<br>
+<div class="mr-3">
+              <% if policy(@chatroom).destroy? %>
+              <%= link_to chatroom_path(@chatroom),
+                          method: :delete,
+                        data: { confirm: "Are you sure?" } do %>
+              <i class="fas fa-trash-alt icons-edit-delete" style="color: #c70000; font-size:28px;"></i>
+              <% end %>
+              <% end %>
+            </div>
+<div id="messages" data-chatroom-id="<%= @chatroom.id %>">
+  <% @chatroom.messages.order('created_at ASC').each do |message| %>
+  <% if message.user.id == current_user.id %>
+    <span class="d-flex justify-content-right mt-2 mb-2">
+      <div class="message-container background-msg-current-user p-3" id="message-<%= message.id %>">
+        <i class="author">
+          <small class="date-txt"><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+        </i>
+        <!-- <p class="user-txt"><%= message.user.email %></p> -->
+        <p class="msg-content"><%= message.content %></p>
+      </div>
+    </span>
+  <% else %>
+    <span class="d-flex justify-content-left mt-2 mb-2">
+      <div class="message-container background-msg-other-user p-3" id="message-<%= message.id %>">
+        <i class="author">
+          <small class="date-txt"><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+        </i>
+        <!-- <p class="user-txt"><%= message.user.email %></p> -->
+        <p class="msg-content"><%= message.content %></p>
+      </div>
+    </span>
+  <% end %>
+  <% end %>
+</div>
+
+
+<div class="card mt-4">
+  <%= simple_form_for [ @chatroom, @message ], remote: true do |f| %>
+  <!-- addded below line from stack overflow -->
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <!-- over -->
+  <%= f.input :content, label: false, :required => true, placeholder: "Let's meet at the local park tmrw at 3?" %>
+  <div class="card">
+    <%= f.submit "SEND", class: "send-btn pt-3 pb-3" %>
+  </div>
+
+<% end %>
+
+</div>
+
+</div>
+
+
+
+
+</div>

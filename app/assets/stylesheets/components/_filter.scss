@@ -1,0 +1,29 @@
+.filter-btn{
+  width:100px;
+  height:60px;
+  align-items: center;
+  text-align: center;
+  border: 1px solid lightgrey;
+  font-size:15px;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+}
+.filter-btn:hover{
+  color: black;
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+.margin-top{
+  margin-top: 8.5vh;
+}
+
+.fix-div{
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  width: 20vh;
+  height: 100vh;
+}

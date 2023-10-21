@@ -1,0 +1,109 @@
+<% content_for :meta_title, "Donations by other skateboarders!" %>
+<% content_for :meta_description, "... one mans trash is another mans treasure !" %>
+
+<div class="container">
+  <div class="d-flex" >
+    <%= link_to "+ add donation", new_donation_path, class: "btn btn-new" %>
+  </div>
+  <br>
+   <h1 class="text-center">
+    DONATIONS
+  </h1>
+
+
+
+  <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        What is this?
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p>
+      Here you can find stuff donated by other skateboarders. Meant for the kids that don't want to ask their mum for 80 bucks for a new board!
+    </p>
+  </div>
+</div>
+
+<br>
+
+</div>
+    <div class="container mt-2 d-flex justify-content-center">
+      <div class="row d-flex justify-content-around" >
+        <% @donations.order('created_at DESC').each do |donation| %>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+              <a href="<%= donation_path(donation) %>" class="style-fix" >
+                 <div class="card card-sizing link-div">
+                  <% if donation.pic1.present? %>
+                    <div class="card-category-img" alt="skatepark or skate spot" style="background-image: url(<%= cl_image_path donation.pic1.key, height: 300, crop: :fill %>)"></div>
+                  <% end %>
+                    <p class="item-title text-center mt-2 style-fix"> <%= donation.title %></p>
+                    <p class="item-title text-center mt-2 style-fix"> <%= donation.date %> - <%= donation.time %></p>
+                    <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;"> <%= donation.location %> </p>
+                </div>
+                <!-- inclue code for edit and delete pundit-->
+              </a>
+              <br>
+              </div>
+            <% end %>
+          </div>
+    </div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+<style type="text/css">
+  .small-txt{
+    font-size:12px;
+  }
+  .selected{
+    padding:10px;
+    text-align: center;
+    width:70px;
+    border: 1px solid black;
+  }
+
+  .PriceInputs{
+    width:70px;
+    font-size:14px;
+  }
+
+.form-check-input {
+    margin: none;
+    height: 30px;
+    margin-left: 100px;
+}
+
+  .form-check{
+    margin-top: 10px;
+  }
+
+  .form-check-label{
+    margin-top: 5px;
+  }
+  .input-field-select{
+     height: 40px;
+     min-height:40px;
+  }
+  #search_type{
+    height:40px;
+    width:180px;
+    padding-left:5px;
+  }
+  .btn-new{
+    background-color: white;
+    border: 1px solid lightgrey;
+  }
+</style>
+

@@ -1,0 +1,252 @@
+
+<% if @skatespot.type_of_spot == "Skatepark" %>
+  <% content_for :meta_title, "Skatepark in #{@skatespot.location}" %>
+<% else %>
+  <% content_for :meta_title, "Skatespot in #{@skatespot.location}" %>
+<% end %>
+<% content_for :meta_description, "#{@skatespot.name} in #{@skatespot.location} - Use skatezar's spotmap to find skateparks and skatespots near you, whereever you may be!" %>
+
+<div class="mobile-div">
+  <div class="d-flex justify-content-around">
+      <div>
+        <% if policy(@skatespot).edit? %>
+          <%= link_to edit_skatespot_path(@skatespot) do %>
+            <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+          <% end %>
+          <% end %>
+      </div>
+      <div>
+        <% if policy(@skatespot).destroy? %>
+        <%= link_to skatespot_path(@skatespot),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } do %>
+        <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 30px;  color: #c70000;"></i>
+        <% end %>
+        <% end %>
+      </div>
+  </div>
+  <br>
+<p style="font-size: 18px;" class="text-center"><%= link_to "Back to all spots", skatespots_path%></p>
+
+<div class="container">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+    </div>
+    <div class="carousel-item">
+      <% if @skatespot.pic2.present? %>
+      <%= cl_image_tag @skatespot.pic2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+    <div class="carousel-item">
+      <% if @skatespot.pic3.present? %>
+      <%= cl_image_tag @skatespot.pic3.key, class: "d-block w-100",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+  </div>
+  <a style="color:black;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @skatespot.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @skatespot.name %></h6>
+
+    <div>
+    <i class="fas fa-map-marker-alt"></i>
+    <span><%= @skatespot.type_of_spot %> in </span>
+
+
+    <span><%= @skatespot.location %></span>
+  </div>
+  <hr>
+  <button onclick="copyToClipboard()" class="btn btn-new">+ Share Spot</button>
+  <br>
+  <p class="subtitle mt-3 ">Specific Address</p>
+  <p class="desc-txt"><%= @skatespot.address%></p>
+
+
+  <p class="subtitle mt-3 ">Description</p>
+  <p class="desc-txt"><%= @skatespot.description%></p>
+
+
+</div>
+
+ <p class="text-center">
+  <% if @skatespot.user.username.present? %>
+      <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@skatespot.user.username}", show_user_path(@skatespot.user)%></p>
+     <% else %>
+      <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@skatespot.user.email.match(/[^@]*/)}", show_user_path(@skatespot.user)%></p>
+     <% end %>
+ </p>
+ <br>
+
+      <% if @skatespot.googlemapslink.present? %>
+       <div class="d-flex justify-content-center">
+          <%= link_to 'google maps', @skatespot.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+       </div>
+      <% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="desktop-div">
+  <div class="container">
+    <div class="d-flex bd-highlight">
+      <div class="p-2 flex-grow-1 bd-highlight">
+        <div class="d-flex justify-content-around">
+          <div><% if policy(@skatespot).edit? %>
+              <%= link_to edit_skatespot_path(@skatespot) do %>
+                <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+              <% end %>
+              <% end %>
+          </div>
+          <div>
+            <% if policy(@skatespot).destroy? %>
+            <%= link_to skatespot_path(@skatespot),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } do %>
+            <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 30px;  color: #c70000;"></i>
+            <% end %>
+            <% end %>
+          </div>
+        </div>
+        <br>
+        <p style="font-size: 18px;" class="text-center"><%= link_to "Back to all spots", skatespots_path%></p>
+        <br>
+        <div class="container" style="max-width: 750px;">
+          <div id="carouselDesktopIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselDesktopIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+            </div>
+            <div class="carousel-item">
+              <% if @skatespot.pic2.present? %>
+              <%= cl_image_tag @skatespot.pic2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+            <div class="carousel-item">
+              <% if @skatespot.pic3.present? %>
+              <%= cl_image_tag @skatespot.pic3.key, class: "d-block w-100",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @skatespot.pic1.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+          </div>
+          <a style="color:black;" class="carousel-control-prev" href="#carouselDesktopIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselDesktopIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+      <div class="p-2 bd-highlight mt-4" style="max-width: 400px;">
+      <div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @skatespot.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @skatespot.name %></h6>
+
+  <div>
+    <i class="fas fa-map-marker-alt"></i>
+    <span><%= @skatespot.type_of_spot %> in </span>
+
+
+    <span><%= @skatespot.location %></span>
+  </div>
+
+  <hr>
+  <button onclick="copyToClipboard()" class="btn btn-new">+ Share Spot</button>
+  <br>
+  <p class="subtitle mt-3 ">Specific Address</p>
+  <p class="desc-txt"><%= @skatespot.address%></p>
+
+
+  <p class="subtitle mt-3 ">Description</p>
+  <p class="desc-txt"><%= @skatespot.description%></p>
+
+</div>
+
+      <p class="text-center">
+      <% if @skatespot.user.username.present? %>
+          <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@skatespot.user.username}", show_user_path(@skatespot.user)%></p>
+         <% else %>
+          <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@skatespot.user.email.match(/[^@]*/)}", show_user_path(@skatespot.user)%></p>
+         <% end %>
+      </p>
+
+      <br>
+      <% if @skatespot.googlemapslink.present? %>
+        <div class="d-flex justify-content-center">
+          <%= link_to 'google maps', @skatespot.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+        </div>
+      <% end %>
+      </div>
+
+    </div>
+</p>
+
+  </div>
+
+</div>
+
+<style type="text/css">
+  .send-msg-btn-style{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+  }
+  .send-msg-btn-style:hover{
+    opacity: 0.5;
+  }
+  .send-msg-btn{
+    margin-top:20px;
+  }
+</style>
+
+
+
+<script type="text/javascript">
+function copyToClipboard(text) {
+var inputc = document.body.appendChild(document.createElement("input"));
+inputc.value = window.location.href;
+inputc.focus();
+inputc.select();
+document.execCommand('copy');
+inputc.parentNode.removeChild(inputc);
+alert("Link copied!");
+$('html,body').scrollTop(0);
+
+}
+</script>

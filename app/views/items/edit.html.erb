@@ -1,0 +1,138 @@
+<!-- create effect so that ONLY WHEN category is selected, brand and size appears -->
+<div class="ml-3">
+  <div class="d-flex justify-content-center">
+    <h4 class="" style="font-weight:bold;">Add a new item</h4>
+  </div>
+  <br>
+
+</div>
+<div class="container" style="max-width: 500px;">
+  <%= form_for(@item) do |f| %>
+<% categoriess = ["Complete", "Board", "Trucks", "Wheels", "Hardware", "Griptape", "Shoes", "Snow Skate", "Fingerboard", "Clothing", "Obstacle", "Other"] %>
+<% conditionss = ["New", "Used"] %>
+<% currenciess = ["$", "€", "£"] %>
+
+
+    <div class="card">
+     <h6 class="mt-5">TITLE</h6>
+
+      <%= f.text_field :title, :required => false, :maxlength => 30, class: "input-field pl-3" %>
+      <hr>
+
+      <h6 class="mt-5">CATEGORY</h6>
+      <%= f.select( :category, categoriess, { :include_blank => false },  {:class => 'input-field-select'}) %>
+      <h6 class="mt-4">CONDITION</h6>
+      <%= f.select( :condition, conditionss, { :include_blank => false },  {:class => 'input-field-select'}) %>
+      <h6 class="mt-4">BRAND</h6>
+      <%= f.text_field :brand, list: "names",   placeholder: "Almost, Real, Baker, Girl...", :maxlength => 30, class: "input-field " %>
+      <h6 class="mt-4">SIZE</h6>
+      <%= f.text_field :size, :maxlength => 12,  placeholder: "Inches for boards, mm for wheels...", class: "input-field" %>
+    </div>
+    <h5 class="mt-5">DESCRIPTION</h5>
+    <div class="card mt-2">
+      <%= f.text_area(:description, :required => true, size: '50x10', placeholder: "I bought this recently but the size doesn't fit... Skated only once.", class: "light-border")%>
+    </div>
+
+    <h5 class="mt-5">PRICE</h5>
+    <div class="d-flex justify-content-center">
+      <div class="card">
+        <%= f.text_field :price, :required => true, placeholder: "Price", class: "input-field" %>
+      </div>
+       <div class="card">
+        <%= f.select( :currency, currenciess, { :include_blank => false },  {:class => 'input-field-select'}) %>
+      </div>
+    </div>
+
+
+    <h5 class="mt-4">LOCATION</h5>
+      <%= f.text_field :location, :id => "pac-input",  :required => true, placeholder: "City, Country", class: "w-100 font-family input-field" %>
+
+<!--
+    <h5 class="mt-5">IMAGES</h5>
+  <div class="row d-flex justify-content-around">
+    <div class=" col-sm-12 col-md-4 imgUp">
+      <div class="imagePreview">
+        <span style="font-size:13px; margin-left: 10px;">*required</span>
+      </div>
+      <label class="btn btn-primary-photo w-100" style="margin-top: 1px;">
+         <div>
+          <span>UPLOAD</span>
+           <%= f.file_field :photo, required: true, class: "uploadFile img" %>
+         </div>
+      </label>
+    </div>
+  <div class=" col-sm-12 col-md-4 imgUp ">
+    <div class="imagePreview"></div>
+    <label class="btn btn-primary-photo w-100" >
+
+               <div>
+                UPLOAD
+                 <%= f.file_field :photo2, class: "uploadFile img" %>
+               </div>
+    </label>
+
+  </div>
+  <div class="col-sm-12 col-md-4 imgUp ">
+    <div class="imagePreview"></div>
+    <label class="btn btn-primary-photo w-100">
+               <div>
+                UPLOAD
+                 <%= f.file_field :photo3, class: "uploadFile img" %>
+               </div>
+        </label>
+
+ </div>
+</div> -->
+<br>
+<br>
+<p style="font-style:italic; font-size:11px;">You cannot edit your images</p>
+<div class="container d-flex justify-content-around">
+  <% if @item.photo.present? %>
+    <div class="card card-sizing link-div m-2" style="border:none;">
+      <div class="card-category-img" style="background-image: url(<%= cl_image_path @item.photo.key, height: 300, crop: :fill %>)">
+      </div>
+    </div>
+  <% end %>
+    <% if @item.photo2.present? %>
+      <div class="card card-sizing link-div m-2" style="border:none;">
+        <div class="card-category-img" style="background-image: url(<%= cl_image_path @item.photo2.key, height: 300, crop: :fill %>)">
+        </div>
+      </div>
+    <% end %>
+ <% if @item.photo3.present? %>
+    <div class="card card-sizing link-div m-2" style="border:none;">
+    <div class="card-category-img" style="background-image: url(<%= cl_image_path @item.photo3.key, height: 300, crop: :fill %>)">
+    </div>
+    </div>
+  <% end %>
+
+</div>
+
+
+    <div class="card mt-4">
+          <%= f.button 'Update Item'.html_safe, type: :submit, class: "upload-btn",
+          data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Uploading..." } %>
+    </div>
+    <div class="control-group">
+  </div>
+
+
+
+
+
+<!-- show hide div https://stackoverflow.com/questions/16015933/how-can-i-show-a-hidden-div-when-a-select-option-is-selected -->
+
+<% end %>
+</div>
+
+
+
+<div id="map" style="display:none;"></div>
+
+
+<datalist id="names">
+    <option value="Real"></option>
+    <option value="Kalle">
+    <option value="Jarmo">
+    <option value="Pekka">
+</datalist>

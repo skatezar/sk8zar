@@ -1,0 +1,141 @@
+.navbar-lewagon {
+  justify-content: space-between;
+  background: white;
+}
+
+.navbar-lewagon .navbar-collapse {
+  flex-grow: 0;
+}
+
+.navbar-lewagon .navbar-brand img {
+  width: 40px;
+}
+
+.search-button{
+    background-color: white;
+    border: none;
+}
+.main-div{
+  width: 100%;
+  max-width: 100%;
+}
+
+.search-div-new{
+  border: 1px solid black;
+}
+
+.search-button:hover{
+  opacity: 0.5;
+  font-weight:bold;
+}
+
+.search-text{
+  font-family: 'Ubuntu', sans-serif;
+
+}
+
+
+.navbar-btns{
+  width:75px;
+  height:35px;
+  text-align:center;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.navbar-btns:hover{
+  text-decoration:none;
+  opacity:0.5;
+}
+
+.login-btn{
+  color: black;
+  background-color: white;
+}
+
+.login-btn:hover{
+  color: black;
+  border: 1px solid black;
+}
+
+.sell-link{
+  color: white;
+  border-color: lightgrey;
+  background-color: black;
+}
+
+.sell-link:hover{
+  border: 1px solid white;
+  color:white;
+
+}
+
+
+
+  .modal-body li {
+    list-style: none;
+
+  }
+
+  .modal-dialog{
+    width:75%;
+  }
+  .modal-content{
+    height: 100vh;
+  }
+  .skatezar-nav{
+    color: black;
+    font-size: 22px;
+  }
+  .dropdown-links{
+    color: black;
+    font-size:18px;
+  }
+  .dropdown-menu{
+      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+
+  .button-none{
+    border:none;
+    background-color:none;
+    background-image: url('https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?b=1&k=6&m=1223671392&s=612x612&w=0&h=5VMcL3a_1Ni5rRHX0LkaA25lD_0vkhFsb1iVm1HKVSQ=');
+  }
+
+
+@media only screen and (min-width: 1000px) {
+  .main-div{
+    display:flex;
+  }
+
+}
+
+@media (min-width: 768px){
+  .col-md-6{
+    max-width: 100%;
+  }
+  .small-screen-navbar{
+    display:none;
+  }
+}
+@media (max-width: 768px){
+  .dropdown-menu{
+    width: 350px;
+  }
+  .large-screen-navbar{
+    display:none;
+  }
+
+}
+
+#nav-messages {
+  display: flex;
+  align-items: center;
+}
+
+.notification-new-message {
+  color: red;
+  font-size: 0.5rem;
+  display: none;
+}

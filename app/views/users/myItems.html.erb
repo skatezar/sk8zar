@@ -1,0 +1,162 @@
+<% content_for :meta_title, "SKATEZAR: Your Items" %>
+<% content_for :meta_description, "Check out the items you uploaded. Here you can edit items if you would like to change details - or delete items if you have sold them!" %>
+
+<div class="container">
+  <h2 class="text-center">YOUR ITEMS</h2>
+  <br>
+</div>
+<% if @items.present? %>
+
+<div class="container mt-2  ">
+  <div class="row ">
+    <% @items.order('created_at DESC').each do |item| %>
+
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center ">
+        <span class="mt-2">
+          <% if item.user == @user %>
+
+          <div class="mb-2">
+            <div class="d-flex justify-content-center">
+              <% if policy(item).edit? %>
+                <%= link_to edit_item_path(item) do %>
+                  <i class="fas fa-edit icons-edit-delete mt-2" style="color: #1ACB80; font-size:20px;" ></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+             <div class="d-flex justify-content-center">
+              <% if policy(item).destroy? %>
+                <% if item.sold == true %>
+                  <%= link_to "MARK AS AVAILABLE", itemavailable_path(:item_id => item.id), class: "btn btn-new" %>
+                <% else %>
+                  <%= link_to "MARK AS SOLD", itemsold_path(:item_id => item.id), class: "btn btn-new" %>
+                <% end %>
+              <% end %>
+            </div>
+            <br>
+          <a href="<%= item_path(item) %>" class="style-fix" >
+             <div class="card card-sizing link-div">
+              <div class="card-category-img" style="background-image: url(<%= cl_image_path item.photo.key, height: 300, crop: :fill %>)">
+                <% if item.sold == true %>
+                  <p style="color:red; background-color: white;" class="w-100 text-center mt-4">SOLD</p>
+                <% end %>
+              </div>
+              <p class="item-title text-center mt-2 style-fix"> <%= item.title %></p>
+        <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;"> <%= item.currency %><%= item.price %> </span> | <%= item.location %> </p>
+              <!-- add REGEX to seletc everything before email and make it a username -->
+            </div>
+            <!-- inclue code for edit and delete pundit-->
+          </a>
+          <br>
+        </span>
+        <div style="position: absolute; bottom: 40%;">
+          <% if item.sold == false %>
+            <% if policy(item).edit? %>
+                  <p style="color: #85bb65; font-size: 13px;">
+                   <%= link_to( 'CLICK TO PROMOTE', promoteitem_path(:item_id => item.id), class: "p-3 money text-center") %>
+                 </p>
+              <% end %>
+          <% end %>
+          </div>
+        </div>
+
+        <% end %>
+      <% end %>
+  </div>
+</div>
+<% else %>
+<br>
+<div class="container d-flex justify-content-center">
+  <span> you have no items -  <%= link_to "click here to upload an item", new_item_path %></span>
+</div>
+<br>
+<% end %>
+
+<!-- skatespots -->
+<div class="container">
+  <h2 class="text-center">YOUR SKATESPOTS</h2>
+</div>
+<% if @skatespots.present? %>
+
+<div class="container mt-2  ">
+  <div class="row ">
+    <% @skatespots.order('created_at DESC').each do |skatespot| %>
+
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center ">
+        <span class="mt-2">
+          <% if skatespot.user == @user %>
+          <div class="d-flex justify-content-around" style="width:150px;">
+
+            <div>
+              <% if policy(skatespot).edit? %>
+                <%= link_to edit_skatespot_path(skatespot) do %>
+                  <i class="fas fa-edit icons-edit-delete" style="color: #1ACB80; font-size:20px;" ></i>
+                <% end %>
+                <% end %>
+            </div>
+            <div>
+              <% if policy(skatespot).destroy? %>
+              <%= link_to skatespot_path(skatespot),
+                        method: :delete,
+                        data: { confirm: "Are you sure?  If you delete an item, you will delete all related messages as well!" } do %>
+              <i class="fas fa-trash-alt icons-edit-delete" style="color: #c70000; font-size: 20px; margin-bottom: 10px;"></i>
+              <% end %>
+              <% end %>
+            </div>
+
+          </div>
+
+          <a href="<%= skatespot_path(skatespot) %>" class="style-fix" >
+             <div class="card card-sizing link-div">
+              <div class="card-category-img" style="background-image: url(<%= cl_image_path skatespot.pic1.key, height: 300, crop: :fill %>)">
+
+              </div>
+              <p class="item-title text-center mt-2 style-fix"> <%= skatespot.name %></p>
+              <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;"><%= skatespot.location %></p>
+            </div>
+          </a>
+          <br>
+        </span>
+
+          </div>
+
+
+        <% end %>
+      <% end %>
+  </div>
+</div>
+<% else %>
+<br>
+<div class="container d-flex justify-content-center">
+  <span> you have no skatespots -  <%= link_to "click here to upload a skatespot", new_skatespot_path %></span>
+</div>
+<br>
+<% end %>
+
+
+
+
+
+
+<div class="container">
+  <!-- question 1 -->
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq1" role="button" aria-expanded="false" aria-controls="collapseq1">
+          <span style="font-weight:bold;">We depend on community support</span>
+          <span> + </span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq1">
+        <div class="card card-body">
+           <p class="text-center">Help make skateboarding cheaper by
+  posting a screenshot of your items on your instagram story and tagging @skatezar for a repost G :)</p>
+        </div>
+      </div>
+
+</div>
+
+<style>
+.icons-edit-delete{
+  font-size:12px;
+}
+</style>

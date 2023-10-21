@@ -1,0 +1,514 @@
+<% content_for :meta_title, "#{@item.title}" %>
+<div class="mobile-div">
+ <!--  <div class="back-button d-flex justify-content-between" style="">
+    <p class="mt-2" style="font-size:22px; font-weight:bold; margin-left:20px;">
+      <
+    </p>
+    <p class="mr-4 mt-2" style="font-size:21px;">
+      <i class="far fa-share-square"></i>
+    </p>
+  </div> -->
+  <!--<div class="back-button d-flex justify-content-between" style="">
+    <p class="mt-2" style="font-size:22px; font-weight:bold; margin-left:20px; color:black;">
+      <%= link_to '<', :back %>
+    </p>
+  </div>-->
+  <div class="d-flex justify-content-around">
+      <div>
+        <% if policy(@item).edit? %>
+          <%= link_to edit_item_path(@item) do %>
+            <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <% if policy(@item).destroy? %>
+          <% if @item.sold == true %>
+            <%= link_to "MARK AS AVAILABLE", itemavailable_path(:item_id => @item.id), class: "btn btn-new" %>
+          <% else %>
+            <%= link_to "MARK AS SOLD", itemsold_path(:item_id => @item.id), class: "btn btn-new" %>
+          <% end %>
+        <% end %>
+      </div>
+  </div>
+  <br>
+  <% if @item.sold == true %>
+    <p class="text-center" style="color: red;">
+      ITEM IS SOLD
+    </p>
+  <% else %>
+    <p class="text-center" style="color: green;">
+      ITEM IS NOT YET SOLD
+    </p>
+  <% end %>
+  <br>
+  <br>
+<div class="container">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+    </div>
+    <div class="carousel-item">
+      <% if @item.photo2.present? %>
+      <%= cl_image_tag @item.photo2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+    <div class="carousel-item">
+      <% if @item.photo3.present? %>
+      <%= cl_image_tag @item.photo3.key, class: "d-block w-100",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+  </div>
+  <a style="color:black;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @item.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @item.title %> - <span class="price"><%= @item.currency %><%= @item.price %></span></h6>
+  <div>
+    <i class="fas fa-map-marker-alt"></i>
+    <span><%= @item.location %></span>
+  </div>
+  <hr>
+  <button onclick="copyToClipboard()" class="btn btn-new">+ Share Item</button>
+  <br>
+  <br>
+  <% if @item.brand.present? %>
+    <p style="font-weight: bold;">BRAND: <span style="font-weight: normal;"><%= @item.brand %></span> </p>
+  <% end %>
+    <p style="font-weight: bold;">CONDITION: <span style="font-weight: normal;"><%= @item.condition %></span> </p>
+  <% if @item.size.present? %>
+    <p style="font-weight: bold;">SIZE: <span style="font-weight: normal;"><%= @item.size %></span> </p>
+  <% end %>
+  <p class="subtitle mt-3">Description</p>
+  <p class="desc-txt"><%= @item.description%></p>
+  <% if @item.price == 0 %>
+    <p style="color: red;" class="text-center">This item is free! All you need to do is pick it up.</p>
+
+  <% end %>
+</div>
+  <hr>
+<% if @item.user != current_user %>
+   <% if current_user %>
+   <p>
+      <button class="msg-button mt-2" type="button" data-toggle="collapse" data-target="#collapseMessageMobile" aria-expanded="false" aria-controls="collapseMessageMobile">
+        MESSAGE
+      </button>
+    </p>
+    <div class="collapse" id="collapseMessageMobile" style="max-width: 650px;">
+      <div class=" ">
+
+       <% if current_user %>
+        <% if @chatroom.persisted? %>
+          <%= simple_form_for [@chatroom, @message] do |f| -%>
+            <%= f.input :content, class: "message-input" %>
+           <%= f.submit 'SEND', :class => 'send-msg-btn-style' %>
+          <% end %>
+        <% else %>
+          <%= simple_form_for [@item, @chatroom] do |f| -%>
+          <%= f.simple_fields_for :messages do |m| %>
+            <div>
+              <%= m.text_area(:content, :required => true, placeholder: "Yo, I'd like to buy this - can we meet tmrw at 13:00 at the local?", class: "msg-text-area")%>
+            </div>
+          <% end %>
+          <%= f.submit 'SEND', :class => 'send-msg-btn-style' %>
+
+        <% end %>
+
+        <% end -%>
+
+        <% end %>
+      </div>
+    </div>
+    <% else %>
+    <%= link_to "MESSAGE", new_user_session_path,  class: "mt-2 msg-button-not-logged-in" %>
+
+    <% end %>
+<% end %>
+<br>
+<% if @item.user.admin == true %>
+      <p class="text-center money" >You can buy this with <strong>skatezar coins</strong></p>
+      <h5 class="text-center">COST: <%= @item.skatezarcoins %> SKATEZAR COINS</h5>
+      <% if current_user %>
+        <% @user_coins = current_user.coins_earned - current_user.coins_expensed %>
+        <% if @user_coins >= @item.skatezarcoins %>
+
+          <%= link_to "BUY WITH SKATEZAR COINS", new_item_skatezarcoinorder_path(@item), class: "btn btn-new d-flex justify-content-center"  %>
+        <% else %>
+          <p style="color: red;">You do not have enough coins.</p>
+          <div class="d-flex justify-content-center">
+              <%= link_to "EARN COINS NOW", communitytasks_path, class: "btn btn-new" %>
+          </div>
+        <% end %>
+        <br>
+      <% else %>
+        <p>
+          <%= link_to "LOGIN", new_user_session_path, class: "ml-3 mt-2 navbar-btns login-btn" %>
+          to see how many coins you have!
+        </p>
+      <% end %>
+    <% end %>
+
+
+
+<% if @item.user == current_user %>
+  <div class="container">
+  <div class="card-product d-flex"  style="height: auto;">
+  <img class="avatar" alt="avatar" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+  <div class="card-product-infos">
+     <!-- <h6><%= @item.user.email %></h6> -->
+    <p style="font-size: 18px;"><%= link_to "view your items", user_my_items_path(current_user)%></p>
+    <p><%= @item.location %></p>
+
+    <% if @item.user.instagram.present? %>
+      <%= link_to "https://www.instagram.com/#{@item.user.instagram}", target: "_blank" do %>
+        <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+      <% end %>
+    <% end %>
+
+     <% if @item.user.stance.present? %>
+          <p class="sub-heading" style="font-size:16.5px;">Stance: <%= @item.user.stance %></p>
+      <% end %>
+  </div>
+</div>
+</div>
+<% else %>
+  <p style="font-size:14px;" class="mt-3">In order to buy the item,
+      you have to message the seller
+      and organize the transaction</p>
+  <hr>
+  <div class="container">
+  <div class="card-product d-flex" style="height: auto;">
+  <img class="avatar" alt="avatar" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+  <div class="card-product-infos">
+     <!-- <h6><%= @item.user.email %></h6> -->
+
+     <% if @item.user.username.present? %>
+      <p style="font-size: 18px;"><%= link_to "view #{@item.user.username}'s items", user_path%></p>
+     <% else %>
+      <p style="font-size: 18px;"><%= link_to "view #{@item.user.email.match(/[^@]*/)}'s items", user_path%></p>
+     <% end %>
+
+    <p><%= @item.location %></p>
+    <% if @item.user.instagram.present? %>
+      <%= link_to "https://www.instagram.com/#{@item.user.instagram}", target: "_blank" do %>
+        <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+      <% end %>
+    <% end %>
+
+     <% if @item.user.stance.present? %>
+          <p class="sub-heading" style="font-size:16.5px;">Stance: <%= @item.user.stance %></p>
+      <% end %>
+
+  </div>
+</div>
+</div>
+<% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="desktop-div">
+  <div class="container">
+    <div class="d-flex bd-highlight">
+      <div class="p-2 flex-grow-1 bd-highlight">
+        <div class="d-flex justify-content-around">
+          <div><% if policy(@item).edit? %>
+              <%= link_to edit_item_path(@item) do %>
+                <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+              <% end %>
+              <% end %>
+          </div>
+          <div>
+        <% if policy(@item).destroy? %>
+          <% if @item.sold == true %>
+            <%= link_to "MARK AS AVAILABLE", itemavailable_path(:item_id => @item.id), class: "btn btn-new" %>
+          <% else %>
+            <%= link_to "MARK AS SOLD", itemsold_path(:item_id => @item.id), class: "btn btn-new" %>
+          <% end %>
+        <% end %>
+      </div>
+  </div>
+  <br>
+  <% if @item.sold == true %>
+    <p class="text-center" style="color: red;">
+      ITEM IS SOLD
+    </p>
+  <% else %>
+    <p class="text-center" style="color: green;">
+      ITEM IS NOT YET SOLD
+    </p>
+  <% end %>
+  <br>
+        <br>
+        <div class="container" style="max-width: 750px;">
+          <div id="carouselDesktopIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselDesktopIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+            </div>
+            <div class="carousel-item">
+              <% if @item.photo2.present? %>
+              <%= cl_image_tag @item.photo2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+            <div class="carousel-item">
+              <% if @item.photo3.present? %>
+              <%= cl_image_tag @item.photo3.key, class: "d-block w-100",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @item.photo.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+          </div>
+          <a style="color:black;" class="carousel-control-prev" href="#carouselDesktopIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselDesktopIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+      <div class="p-2 bd-highlight mt-4" style="max-width: 400px;">
+      <div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @item.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @item.title %>  -  <span class="price"><%= @item.currency %><%= @item.price %></span></h6>
+  <div>
+    <i class="fas fa-map-marker-alt"></i>
+    <span><%= @item.location %></span>
+  </div>
+
+  <br>
+  <button onclick="copyToClipboard()" class="btn btn-new">+ Share Item</button>
+  <br>
+
+  <hr>
+  <% if @item.brand.present? %>
+    <p style="font-weight: bold;">BRAND: <span style="font-weight: normal;"><%= @item.brand %></span> </p>
+  <% end %>
+    <p style="font-weight: bold;">CONDITION: <span style="font-weight: normal;"><%= @item.condition %></span> </p>
+  <% if @item.size.present? %>
+    <p style="font-weight: bold;">SIZE: <span style="font-weight: normal;"><%= @item.size %></span> </p>
+  <% end %>
+
+  <p class="subtitle mt-3 text-center">Description</p>
+  <p class="desc-txt"><%= @item.description%></p>
+  <% if @item.price == 0 %>
+    <p style="color: red;">This item is free! All you need to do is pick it up.</p>
+
+  <% end %>
+</div>
+  <hr>
+<% if @item.user != current_user %>
+  <div class="container">
+    <% if current_user %>
+    <p>
+      <button class="msg-button mt-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        MESSAGE
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample" style="max-width: 650px;">
+      <div class=" ">
+
+       <% if current_user %>
+        <% if @chatroom.persisted? %>
+          <%= simple_form_for [@chatroom, @message] do |f| -%>
+            <%= f.input :content, class: "message-input" %>
+           <%= f.submit 'SEND', :class => 'send-msg-btn-style' %>
+          <% end %>
+        <% else %>
+          <%= simple_form_for [@item, @chatroom] do |f| -%>
+          <%= f.simple_fields_for :messages do |m| %>
+            <div>
+              <%= m.text_area(:content, :required => true, placeholder: "Yo, I'd like to buy this - can we meet tmrw at 13:00 at the local?", class: "msg-text-area")%>
+            </div>
+          <% end %>
+          <%= f.submit 'SEND', :class => 'send-msg-btn-style' %>
+
+        <% end %>
+
+        <% end -%>
+
+        <% end %>
+      </div>
+    </div>
+    <% else %>
+    <%= link_to "MESSAGE", new_user_session_path,  class: "mt-2 msg-button-not-logged-in" %>
+    <% end %>
+  </div>
+<% end %>
+
+<br>
+<% if @item.user.admin == true %>
+      <p class="text-center money" >You can buy this with <strong>skatezar coins</strong></p>
+      <h5 class="text-center">COST: <%= @item.skatezarcoins %> SKATEZAR COINS</h5>
+      <% if current_user %>
+        <% @user_coins = current_user.coins_earned - current_user.coins_expensed %>
+        <% if @user_coins >= @item.skatezarcoins %>
+
+          <%= link_to "BUY WITH SKATEZAR COINS", new_item_skatezarcoinorder_path(@item), class: "btn btn-new d-flex justify-content-center"  %>
+
+        <% else %>
+          <p style="color: red;">You do not have enough coins.</p>
+          <div class="d-flex justify-content-center">
+              <%= link_to "EARN COINS NOW", communitytasks_path, class: "btn btn-new" %>
+          </div>
+        <% end %>
+        <br>
+      <% else %>
+        <p>
+          <%= link_to "LOGIN", new_user_session_path, class: "ml-3 mt-2 navbar-btns login-btn" %>
+          to see how many coins you have!
+        </p>
+      <% end %>
+    <% end %>
+
+
+<% if @item.user == current_user %>
+
+    <div class="container">
+    <div class="card-product d-flex" style="height: auto;">
+    <img class="avatar" alt="avatar" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+    <div class="card-product-infos">
+       <!-- <h6><%= @item.user.email %></h6> -->
+      <p style="font-size: 18px;">
+        <%= link_to "view your items", user_my_items_path(current_user)%></p>
+      <p><%= @item.location %></p>
+
+      <% if @item.user.instagram.present? %>
+        <%= link_to "https://www.instagram.com/#{@item.user.instagram}", target: "_blank" do %>
+          <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+        <% end %>
+    <% end %>
+     <% if @item.user.stance.present? %>
+          <p class="sub-heading" style="font-size:16.5px;">Stance: <%= @item.user.stance %></p>
+      <% end %>
+    </div>
+  </div>
+  </div>
+<% else %>
+  <p style="font-size:14px;" class="mt-3">In order to buy the item,
+      you have to message the seller
+      and organize the transaction</p>
+  <hr>
+  <div class="container">
+  <div class="card-product d-flex" style="height: auto;">
+  <img class="avatar" alt="avatar" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+  <div class="card-product-infos">
+     <!-- <h6><%= @item.user.email %></h6> -->
+      <% if @item.user.username.present? %>
+      <p style="font-size: 18px;"><%= link_to "view #{@item.user.username}'s items", user_path%></p>
+     <% else %>
+      <p style="font-size: 18px;"><%= link_to "view #{@item.user.email.match(/[^@]*/)}'s items", user_path%></p>
+     <% end %>
+     <p><%= @item.location %></p>
+
+    <% if @item.user.instagram.present? %>
+      <%= link_to "https://www.instagram.com/#{@item.user.instagram}", target: "_blank" do %>
+        <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+      <% end %>
+    <% end %>
+
+     <% if @item.user.stance.present? %>
+
+          <p class="sub-heading" style="font-size:16.5px;">Stance: <%= @item.user.stance %></p>
+
+      <% end %>
+  </div>
+</div>
+</div>
+<% end %>
+
+</div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  .send-msg-btn-style{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+  }
+  .send-msg-btn-style:hover{
+    opacity: 0.5;
+  }
+  .send-msg-btn{
+    margin-top:20px;
+  }
+</style>
+
+ <!-- Modal for message -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" >
+    <div class="modal-content msg-modal-fix" >
+      <div class="modal-body">
+        <% if current_user %>
+        <% if @chatroom.persisted? %>
+          <%= simple_form_for [@chatroom, @message] do |f| -%>
+            <%= f.input :content, class: "message-input" %>
+           <%= f.submit 'SEND', :class => 'send-msg-btn' %>
+          <% end %>
+        <% else %>
+          <%= simple_form_for [@item, @chatroom] do |f| -%>
+          <%= f.simple_fields_for :messages do |m| %>
+            <div>
+              <%= m.text_area(:content, :required => true, placeholder: "Yo, I'd like to buy this - can we meet tmrw at 13:00 at the local?", class: "msg-text-area")%>
+            </div>
+          <% end %>
+          <%= f.submit 'SEND', :class => 'send-msg-btn' %>
+        <% end %>
+        <% end %>
+        <% end %>
+      </div>
+      </div>
+      </div>
+    </div>
+
+
+
+<script type="text/javascript">
+function copyToClipboard(text) {
+var inputc = document.body.appendChild(document.createElement("input"));
+inputc.value = window.location.href;
+inputc.focus();
+inputc.select();
+document.execCommand('copy');
+inputc.parentNode.removeChild(inputc);
+alert("Link copied!");
+$('html,body').scrollTop(0);
+
+}
+</script>

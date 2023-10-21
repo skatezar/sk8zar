@@ -1,0 +1,198 @@
+<% content_for :meta_title, "SKATEZAR: Upload a skate contest" %>
+<% content_for :meta_description, "Upload skate event near you. This is a community project - the more people upload things,
+the more useful the platform becomes!" %>
+
+
+<!-- create effect so that ONLY WHEN category is selected, brand and size appears -->
+<div class="ml-3">
+  <div class="d-flex justify-content-center">
+    <h4 class="" style="font-weight:bold;">Add a new skate contest</h4>
+  </div>
+  <br>
+
+</div>
+<div class="container" style="max-width: 500px;">
+  <%= form_for(@skateevent) do |f| %>
+
+    <div class="card">
+      <h6 class="mt-5">TITLE</h6>
+      <%= f.text_field :name_title, :required => true, :maxlength => 30, class: "input-field pl-3" %>
+      <hr>
+    </div>
+
+    <h5 class="mt-4">LOCATION</h5>
+      <%= f.text_field :location, :required => true, placeholder: "City, Country", class: "w-100 font-family input-field locationSearchInput" %>
+      <br>
+      <br>
+      <h5>ADDRESS</h5>
+      <%= f.text_field :address, :required => true, placeholder: "Address / Specific location", class: "w-100 font-family input-field  " %>
+      <br>
+    <h5 class="mt-4">DATE</h5>
+      <%= f.text_field :date2, type: :date, :required => true, placeholder: "Date", class: "w-100 font-family input-field" %>
+
+      <br>
+
+    <h5 class="mt-4">TIME</h5>
+      <%= f.text_field :time, type: :time, :required => true, placeholder: "Time", class: "w-100 font-family input-field" %>
+      <br>
+
+      <h5 class="mt-5">DESCRIPTION</h5>
+    <div class="card mt-2">
+      <%= f.text_area(:description, :required => true, size: '50x10', placeholder: "Any other important details?", class: "light-border")%>
+    </div>
+
+    <h5 class="mt-4">TYPE</h5>
+      <%= f.select :contest_type, ['Street', 'Bowl', 'Both'], :required => true,   class: "w-100 font-family input-field-select" %>
+    <br>
+    <br>
+
+  <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        EXTRA DETAILS
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p>
+       <h5>GOOGLE MAPS (OPTIONAL)</h5>
+      <%= f.text_field(:googlemapslink, placeholder: "Add a link to the google maps location", class: "w-100 font-family input-field")%>
+      <br>
+      <br>
+      <h5>FACEBOOK EVENT (OPTIONAL)</h5>
+      <%= f.text_field(:fblink, placeholder: "Add a link to the google maps location", class: "w-100 font-family input-field")%>
+      <br>
+      <br>
+      <h5>PAST CONTEST VIDEO (OPTIONAL)</h5>
+      <%= f.text_field(:youtubelink, size: '50x10', placeholder: "Add a link to the google maps location", class: "w-100 font-family input-field")%>
+      <br>
+    </p>
+  </div>
+</div>
+
+    <!-- add currency -->
+    <h5 class="mt-5">IMAGES</h5>
+  <div class="row d-flex justify-content-around">
+    <div class=" col-sm-12 col-md-4 imgUp">
+      <div class="imagePreview">
+        <span style="font-size:13px; margin-left: 10px; color: #8a0303;">*required</span>
+      </div>
+      <label class="btn btn-primary-photo w-100" style="margin-top: 1px;">
+         <div>
+          <span>UPLOAD</span>
+           <%= f.file_field :pic1, required: true, id: "skatespot_photo", class: "uploadFile img" %>
+         </div>
+      </label>
+    </div><!-- col-2 -->
+  <div class=" col-sm-12 col-md-4 imgUp ">
+    <div class="imagePreview"></div>
+    <label class="btn btn-primary-photo w-100" >
+      <!-- <input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"> -->
+               <div>
+                UPLOAD
+                 <%= f.file_field :pic2, class: "uploadFile img" %>
+               </div>
+    </label>
+  <!-- <i class="fa fa-times del"></i> -->
+  </div>
+  <div class="col-sm-12 col-md-4 imgUp ">
+    <div class="imagePreview"></div>
+    <label class="btn btn-primary-photo w-100">
+               <div>
+                UPLOAD
+                 <%= f.file_field :pic3, class: "uploadFile img" %>
+               </div>
+        </label>
+
+  </div><!-- row -->
+
+</div><!-- container -->
+
+    <div class="card mt-4">
+          <%= f.button 'Upload Contest'.html_safe, id: 'upload-btn', type: :submit, class: "upload-btn",
+          data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Uploading..." } %>
+    </div>
+
+
+
+<!-- show hide div https://stackoverflow.com/questions/16015933/how-can-i-show-a-hidden-div-when-a-select-option-is-selected -->
+
+<% end %>
+
+</div>
+
+
+<script type="text/javascript">
+  var photo1 = document.getElementById('skatespot_photo');
+  var uploadBtn = document.getElementById('upload-btn');
+
+
+  uploadBtn.addEventListener("click", (event) => {
+    if (photo1.value == "") {
+      alert('Please upload an image in the required field')
+    }
+  });
+</script>
+
+<!-- max file size -->
+<script type="text/javascript">
+  var uploadField = document.querySelectorAll(".uploadFile");
+  console.log(uploadField)
+
+  for (i = 0; i < uploadField.length; i++) {
+    uploadField[i].onchange = function() {
+    if(this.files[0].size > 10485760)
+    {
+       alert("File is too big! Maximum 10MB");
+       this.value = "";
+    };
+};
+  }
+
+
+</script>
+
+
+<style type="text/css">
+  #skatespot_type_of_spot{
+    height:40px;
+    width:100%;
+    border-color: lightgrey;
+  }
+</style>
+
+
+
+<script type="text/javascript">
+  var nametitle = document.getElementById('skateevent_name_title');
+  var contest_type = document.getElementById('skateevent_contest_type');
+  var description = document.getElementById('skateevent_description');
+  var address = document.getElementById('skateevent_address');
+  var datee = document.getElementById('skateevent_date2');
+  var time = document.getElementById('skateevent_time');
+  var location1 = document.getElementById('skateevent_location');
+  var photo1 = document.getElementById('skatespot_photo');
+
+  $(document).ready(function () {
+  $(uploadBtn).click(function () {
+    if (nametitle.value != '' && description.value != '' && contest_type.value != '' && photo1.value != "" && location1.value != '' && address.value != '') {
+      alert('You earned +1 skatezar coin!')
+      $("#spinner").show();
+    };
+    });
+  });
+  // onclick functionality
+</script>
+
+
+<style type="text/css">
+  #skateevent_contest_type{
+  height: 40px;
+  width: 100%;
+  min-height:40px; }
+
+</style>

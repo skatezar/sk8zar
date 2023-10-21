@@ -1,0 +1,226 @@
+<% content_for :meta_title, "SKATEZAR: About Us" %>
+<% content_for :meta_description, "Skatezar is a reselling market for skateboarders. It is a community project with the aims of
+ 1) connecting local communities and 2) making skateboarding items cheaper." %>
+
+
+<div class="container mt-3">
+  <div class="d-flex justify-content-center mb-3">
+      <%= image_tag("skatezar-banner.png", width: 400, height: 65) %>
+  </div>
+  <h6 class="text-center">
+      office@skatezar.com or <a href="https://www.instagram.com/skatezar" style="color: blue;" target="_blank">DM us on insta</a>
+  </h6>
+
+<h6> <strong>
+Total of <%= Item.all.length %> Items uploaded and/or sold on skatezar!
+</strong>
+</h6>
+<br>
+  <!-- <p class="text-center mt-3"><%= link_to " by the community, for the community.", community_path, target: "_blank", class: " " %></p> -->
+
+  <p>How does skatezar work?</p>
+
+
+
+
+<!-- FAQ main div -->
+<p>
+  <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+   <span>Frequently Asked Questions</span>
+   <span style="font-weight:bold;"> > </span>
+
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <!-- question 1 -->
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq11" role="button" aria-expanded="false" aria-controls="collapseq11">
+
+          <span>What is skatezar?</span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq11">
+        <div class="card card-body">
+          <p>Skatezar is a reselling platform exclusively for skateboarders. Individual skateboarders,
+          local brands and skateboard distributions can upload their items, for free. Skaters can then
+        check the platform, use the skateboard-specific search filters, and message the seller.
+      </p>
+      <p>
+        No money flows through the platform and skatezar does not take responsibility for any transactions
+        that happen on the skatezar platform. Skatezar simply connects buyers and sellers so they can message
+        with each other on skatezar's live chat app.
+      </p>
+
+      <p>Therefore, skatezar only works in local skate communities - and that is the entire point -
+        <span style="font-weight: bold;">
+          we want to connect local skate communities and make skateboarding items cheaper. </p>
+        </span>
+      </p>
+      <p>
+        Soon we will branch out our platform to a few cool features, such as local skate spot maps,
+        community support events (Building skateparks in Uganda) and more...
+      </p>
+        </div>
+      </div>
+
+        <!-- question 1 -->
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq1" role="button" aria-expanded="false" aria-controls="collapseq1">
+
+          <span>Do you pay through the platform?</span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq1">
+        <div class="card card-body">
+          <p>No. Skatezar is purely a <span style="font-weight: bold;">messaging platform.</span> You should use the location filter to
+          only see items in your local city. Then, message the seller and find a place to meet. When you're done with business,
+          you can go skate too, but business first my g
+        </p>
+        </div>
+      </div>
+
+      <!-- question 2 -->
+
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq2" role="button" aria-expanded="false" aria-controls="collapseq2">
+
+          <span>How do I upload stuff?</span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq2">
+        <div class="card card-body">
+          <ol>
+            <li>Create an account, for free</li>
+            <li>Click on Sell</li>
+            <li>Fill out the details</li>
+          </ol>
+          <p style="font-weight: bold;">It takes less than 60 seconds to upload an item</p>
+
+
+        </div>
+      </div>
+
+
+      <!-- question 4 -->
+
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq4" role="button" aria-expanded="false" aria-controls="collapseq4">
+
+          <span>Why are there no items in my city?</span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq4">
+        <div class="card card-body">
+          <p>Because its your lucky day.</p>
+          <p>Skatezar has not yet been established in your city - but with you it can be. All that skatezar
+          needs is a community of skateboarders from a local city to upload their skate stuff.</p>
+          <p>If there are no items yet in your city, you can become a skatezar ambassador.</p>
+          <p>This means you will get free merchandise (t-shirts) and sticker packs from us; we will pay for shipping.
+          We will also promote your skate account on our <a href="https://www.instagram.com/skatezar"> instagram </a>.</p>
+          <p>All you need to do is to promote skatezar in your local community - you have to get 10 items
+          online in your city.</p>
+          <p>If you want to become an ambassador for us, just send us an email at office@skatezar.com or DM us on instagram.</p>
+
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+<br>
+<!-- questions start -->
+
+<div class="container">
+
+
+   <!-- <p class="larger-subheader text-center"><strong>Our vision is to connect local skateboarding communities and to make skateboarding cheaper.</strong></p> -->
+   <p class="mt-5">About Us</p>
+</div>
+
+<div class="desktop-div container">
+
+  <div class="container mt-5 d-flex justify-content-around" >
+    <div>
+      <%= image_tag("swflip.jpg", width: 400) %>
+      <!-- <p class="img-text-desc">SKATEZAR contest in Vienna, Austria</p> -->
+    </div>
+    <div class="text-div">
+      <h3 class="txt-about-us"><strong>1. Make skateboarding items cheaper</strong></h3>
+    </div>
+  </div>
+
+  <div class="container mt-5 d-flex justify-content-around" >
+    <div class="text-div">
+      <h3 class="txt-about-us"><strong>2. Connect local skateboarding communities</strong></h3>
+    </div>
+    <div>
+      <%= image_tag("skatezar-contest.jpg", width: 450) %>
+      <p class="img-text-desc">SKATEZAR contest in Vienna, Austria</p>
+    </div>
+  </div>
+
+  <div class="container mt-5 d-flex justify-content-around" >
+    <div>
+      <%= image_tag("fsnose.jpg", width: 500) %>
+      <!-- <p class="img-text-desc">SKATEZAR contest in Vienna, Austria</p> -->
+    </div>
+    <div class="text-div m-3">
+      <h3 class="txt-about-us"><strong>3. Give skateboarders a platform to sell their stuff</strong></h3>
+    </div>
+  </div>
+      <div class="container">
+        <div class="d-flex justify-content-around footer-links mt-4">
+          <a href="https://www.instagram.com/skatezar" target="_blank"><i class="fab fa-instagram" style="font-size:60px;"></i></a>
+          <!-- <a href="#"><i class="fab fa-facebook" style="font-size:60px;"></i></a> -->
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+
+<div class="mobile-div">
+  <div class="container mt-5" >
+    <h5 class="txt-about-us"><strong>1. Make skateboarding items cheaper</strong></h5>
+    <br>
+    <h5 class="txt-about-us"><strong>2. Connect local skateboarding communities</strong></h5>
+    <br>
+    <h5 class="txt-about-us"><strong>3. Give skateboarders a platform to sell their stuff</strong></h5>
+    <br>
+    <div class="d-flex justify-content-center">
+          <%= image_tag("swflip.jpg", width: 300, height: 400) %>
+    </div>
+    <hr>
+    <div class="container">
+      <h6 class="text-center">Follow us on Instagram</h6>
+      <div class="d-flex justify-content-around footer-links mt-4">
+        <a href="https://www.instagram.com/skatezar" target="_blank"><i class="fab fa-instagram" style="font-size:60px;"></i></a>
+    </div>
+</div>
+
+
+<style type="text/css">
+  .larger-subheader{
+    font-size:22px;
+  }
+  .img-text-desc{
+    font-style:italic;
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+
+  .text-div{
+    position: relative;
+    overflow: hidden;
+  }
+  .txt-about-us{
+    position: relative;
+    top: 45%;
+  }
+
+  .btn-white{
+    background-color: white;
+    display: flex;
+    text-align: center;
+  }
+</style>

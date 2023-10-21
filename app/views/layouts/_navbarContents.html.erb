@@ -1,0 +1,10 @@
+<p><%= link_to "Messages", chatrooms_path, class: "ml-3 dropdown-links" %></p>
+<%= link_to chatrooms_path, class: "nav-link", id: 'nav-messages', data: { user_id: current_user.id } do %>
+  <span class="notification-new-message mb-3 mr-2"><i class="fas fa-circle"></i></span>
+<p style="color: black; font-size:17px;" class="hover-underline">Messages</p>
+
+<span class="notification-new-message"><i class="fas fa-circle"></i></span>
+<% end %>
+<p><%= link_to "My Account", my_profile_path, class: "ml-3 dropdown-links" %></p>
+<p><%= link_to('My Items', items_path, method: :delete, class: "ml-3 dropdown-links") %></p>
+<p><%= link_to('Logout', destroy_user_session_path, method: :delete, class: "ml-3 dropdown-links") %></p>

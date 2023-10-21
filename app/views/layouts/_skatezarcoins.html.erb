@@ -1,0 +1,45 @@
+
+<div class="stickyfooter money">
+  <div style="width: 10%;" class="mt-3">
+        <%= link_to '<', :back, class: 'back-btn p-2' %>
+  </div>
+  <div style="margin-top: -75px;">
+  <% if current_user %>
+    <h4 style="color:white;" class="text-center mt-2">Skatezar Coins:
+      <% @coins = current_user.coins_earned - current_user.coins_expensed %>
+      <%= @coins %>
+    </h4>
+  <% else %>
+  <div class="d-flex justify-content-center p-2">
+    <%= link_to "LOGIN FOR COINS", new_user_session_path, class: "black-white-btn p-2" %>
+  </div>
+
+  <% end %>
+  <div class="d-flex justify-content-center">
+    <%= link_to "EARN COINS NOW", communitytasks_path, class: "btn btn-new" %>
+  </div>
+</div>
+</div>
+
+<style type="text/css">
+  .stickyfooter{
+   position:fixed;
+    bottom:0;
+    width:100%;
+    z-index:100;
+    height:100px;
+  }
+
+  .black-white-btn{
+    background-color: black;
+    color: white;
+  }
+
+  .back-btn{
+    font-size:40px;
+    color:white;
+    font-weight: bold;
+
+  }
+
+</style>

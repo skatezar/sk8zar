@@ -1,0 +1,124 @@
+<div class="desktop-div">
+  <h6 class="text-center">BUY SOMETHING WITH <strong>SKATEZAR COINS!</strong></h6>
+<p class="text-center">cost: <strong> <%= @item.skatezarcoins %> Skatezar Coins</strong></p>
+
+<div class="container d-flex  justify-content-center">
+  <%= form_for [ @item, @order ] do |f| %>
+  <p class="text-center">
+    <%= @item.title %>
+  </p>
+
+  <div class="card-category-img" style="background-image: url(<%= cl_image_path @item.photo.key, height: 300, crop: :fill %>)"></div>
+  <br>
+  <hr>
+    <div class="container">
+        <%= f.text_field :firstname, :required => true, placeholder: "First Name", class: "pl-3 w-100" %>
+        <br>
+        <br>
+        <%= f.text_field :lastname, :required => true, placeholder: "Last Name", class: "pl-3 w-100" %>
+    </div>
+    <br>
+    <div class="container">
+      <%= f.text_field :address, :required => true, placeholder: "Address", class: "pl-3 w-100" %>
+      <br>
+      <br>
+      <%= f.text_field :country, :required => true, placeholder: "City, Country", class: "pl-3 locationSearchInput w-100" %>
+    </div>
+    <br>
+    <div class="container d-flex justify-content-center">
+        <%= f.text_field :postalcode, placeholder: "Postal Code", class: "pl-3" %>
+    </div>
+    <br>
+    <div class="container d-flex justify-content-center">
+        <%= f.text_area(:message, :required => true, size: '50x5', placeholder: "Optional message.... Kickflip or heelflip???", class: "light-border")%>
+    </div>
+    <br>
+    <p class="text-center" >
+      The item will arrive within
+      <span style="color:red;">
+        2 weeks
+      </span>
+
+    </p>
+    <br>
+    <div class="container d-flex justify-content-center">
+      <%= f.submit "ORDER", class: "btn btn-new" %>
+    </div>
+
+
+  <% end %>
+
+</div>
+</div>
+<div class="mobile-div">
+
+<div class="container">
+
+<h6 class="text-center">BUY SOMETHING WITH <strong>SKATEZAR COINS!</strong></h6>
+<p class="text-center">cost: <strong> <%= @item.skatezarcoins %> Skatezar Coins</strong></p>
+
+<div class="container d-flex  justify-content-center">
+  <%= form_for [ @item, @order ] do |f| %>
+  <p class="text-center">
+    <%= @item.title %>
+  </p>
+  <div style="width: 300px; display: block; margin: auto;">
+    <div class="card-category-img d-flex justify-content-center" style="background-image: url(<%= cl_image_path @item.photo.key, height: 300, crop: :fill %>)"></div>
+  </div>
+
+  <br>
+  <hr>
+    <div class="d-flex justify-content-center">
+        <%= f.text_field :firstname, :required => true, placeholder: "First Name" %>
+        <br>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+
+        <%= f.text_field :lastname, :required => true, placeholder: "Last Name" %>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+      <%= f.text_field :address, :required => true, placeholder: "Address" %>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+      <%= f.text_field :country, :required => true, placeholder: "City, Country", class: "locationSearchInput" %>
+    </div>
+    <br>
+    <div class="container d-flex justify-content-center">
+        <%= f.text_field :postalcode, placeholder: "Postal Code" %>
+    </div>
+    <br>
+    <div class="container d-flex justify-content-center">
+        <%= f.text_area(:message, :required => true, size: '30x5', placeholder: "Optional message.... Kickflip or heelflip???", class: "light-border")%>
+    </div>
+    <br>
+    <p class="text-center" >
+      The item will arrive within
+      <span style="color:red;">
+        2 weeks
+      </span>
+
+    </p>
+    <br>
+    <div class="container d-flex justify-content-center">
+      <%= f.submit "ORDER", class: "btn btn-new" %>
+    </div>
+
+
+  <% end %>
+
+</div>
+
+</div>
+
+
+<style type="text/css">
+  .input-style{
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+</div>

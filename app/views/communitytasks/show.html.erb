@@ -1,0 +1,50 @@
+<div class="container">
+  <%= link_to '< BACK TO ALL TASKS', communitytasks_path, class: "btn btn-new" %>
+  <br>
+  <br>
+  <h4 class="text-center">
+    <span style="font-weight:bold;">
+      TASK:
+    </span>
+    <%= @communitytask.title  %>
+  </h4>
+
+  <p class="text-center money-green">coin reward: <%= @communitytask.coin_reward %></p>
+
+  <p class="text-center">
+    <p style="font-weight:bold;"> Description:</p>
+    <%= @communitytask.description %>
+  </p>
+  <p style="font-weight:bold;"> Verification:</p>
+    <% if @communitytask.automatic_verification == true %>
+
+      <p class="baby-blue">Coins Added Automatically :)</p>
+    <% else %>
+      <div class="mt-2">
+        <p class="" style="color: red;">Not verified automatically</p>
+        <p style="font-weight:bold; font-size:13px;">How do we verify?</p>
+        <% if @communitytask.verification.present? %>
+          <%= @communitytask.verification %>
+        <% end %>
+        <br>
+        <br>
+        <%= link_to 'CLAIM COINS', new_communitytask_claim_path(@communitytask), class: "btn btn-new d-flex justify-content-center money" %>
+      </div>
+    <% end %>
+
+
+
+<% if current_user && current_user.admin == true %>
+<ul class="list-group">
+  <% @communitytask.claims.each do |claim| %>
+    <li class="list-group-item"><%= claim.content %> - <%= claim.user.email%>
+     <% if claim.user.instagram.present? %>
+      <%= link_to "https://www.instagram.com/#{claim.user.instagram}", target: "_blank" do %>
+        <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
+<% end %>
+</div>
+

@@ -1,0 +1,267 @@
+<% content_for :meta_title, "Skateparks and skate spots near me - skateboarding spotmap" %>
+<% content_for :meta_description, "Find skateparks and skate spots near you. If you don't know where to skateboard, check out all the skateparks and
+skate spots available in your sourrounding on skatezar!" %>
+
+<div class="container">
+  <div class="d-flex" >
+    <%= link_to "+ add spot", new_skatespot_path, class: "btn btn-new" %>
+  </div>
+  <br>
+   <h1 class="text-center">
+    SKATEBOARDING SPOTMAP
+  </h1>
+
+<% if params[:spotsearch].present? %>
+    <% if params[:spotsearch][:location] == "" %>
+        <p class="text-center">
+
+          <%= Skatespot.all.length %>
+          <%= 'spot'.pluralize(Skatespot.all.length) %> available worldwide
+        </p>
+    <% else %>
+    <p class="text-center">
+
+      <%= Skatespot.near(params[:spotsearch][:location]).length %>
+      <%= 'spot'.pluralize(Skatespot.near(params[:spotsearch][:location]).length) %> available in <%= params[:spotsearch][:location] %>
+    </p>
+   <% end %>
+  <% else %>
+  <div id="map" style="display:none;"></div>
+    <p class="text-center">
+
+    <%= Skatespot.all.length %>
+    <%= 'spot'.pluralize(Skatespot.all.length) %> available worldwide
+  </p>
+  <% end %>
+<br>
+
+  <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        What is this?
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p>
+      Here you can find skateparks and skate spots near you. Filter by your location and you will see what skateparks and skate spots other skateboarders
+      have uploaded. If you can't find any near you - add some that you know and tell your local community to do the same! You will be surprised what
+      spots there are near you.
+    </p>
+  </div>
+</div>
+
+<br>
+
+<% if params[:spotsearch].present? %>
+  <% location = params[:spotsearch][:location] %>
+  <% type_of_spot = params[:spotsearch][:type_of_spot] %>
+<% end %>
+<!-- no search -->
+<% if params[:spotsearch] == nil %>
+  <% skatespot_ids = [] %>
+  <% Skatespot.all.each do |skatespot| %>
+    <% skatespot_ids.append(skatespot.id) %>
+  <% end %>
+
+<!-- only location -->
+<% elsif location.present? && type_of_spot == nil %>
+  <% skatespot_ids = [] %>
+  <% Skatespot.near(location).each do |skatespot| %>
+    <% skatespot_ids.append(skatespot.id) %>
+  <% end %>
+
+<!-- only type of spot -->
+<% elsif location == "" && type_of_spot.present? %>
+  <% skatespot_ids = [] %>
+  <% Skatespot.where(type_of_spot: type_of_spot).each do |skatespot| %>
+    <% skatespot_ids.append(skatespot.id) %>
+  <% end %>
+
+<% elsif location.present? && type_of_spot.present? %>
+  <% skatespot_ids = [] %>
+  <% Skatespot.where(type_of_spot: type_of_spot).near(location).each do |skatespot| %>
+    <% skatespot_ids.append(skatespot.id) %>
+  <% end %>
+<% end %>
+
+<% if params[:spotsearch].present? && params[:spotsearch][:location].present? == false %>
+<p></p>
+<% else %>
+<div class="d-flex justify-content-center">
+    <p><%= link_to "Random Spot", "https://www.skatezar.com/skatespots/#{skatespot_ids.sample}", class: "ml-3 btn-primary btn" %></p>
+  </div>
+<% end %>
+
+<div class="d-flex">
+    <div class="container ">
+    <%= simple_form_for :spotsearch, url: skatespots_path, method: "GET" do |f| %>
+
+    <span class="">
+      <div class="card">
+          <% if params[:spotsearch].present? %>
+            <% if params[:spotsearch][:location] == "" %>
+              <%= f.text_field :location,  :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+            <% else %>
+              <%= f.text_field :location, :value => "#{params[:spotsearch][:location]}", :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+            <% end %>
+          <% else %>
+          <div id="map" style="display:none;"></div>
+          <%= f.text_field :location, :class => "controls", placeholder: "City, Country", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+          <% end %>
+         <br>
+      </div>
+      <div class="card"  >
+        <p>
+          <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseTypeOfSpot" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Type
+          </a>
+        </p>
+
+    <div class="collapse" id="collapseTypeOfSpot" style="border: 1px solid lightgrey;">
+      <div class="card" style="width:200px;">
+          <%= f.input :type_of_spot, as: :check_boxes, collection: $type_of_spots, label: "", class: "form-check-input", include_hidden: false %>
+      </div>
+    </div>
+
+      </div>
+    </span>
+    <% if params[:spotsearch].present? %>
+      <div class="text-center">
+        <%= link_to "Reset Filters", skatespots_path  %>
+      </div>
+    <% end %>
+    <div style="width:200px; display: block; margin:auto;" >
+      <%= f.submit "Search", class: "btn sell-link w-100 mt-4 ", data: { disable_with: "Searching..." }%>
+    </div>
+
+
+  </div>
+</div>
+
+
+        <% end %>
+</div>
+    <div class="container mt-2 d-flex justify-content-center">
+      <div class="row d-flex justify-content-around" >
+        <% @skatespots.order('created_at DESC').each do |skatespot| %>
+          <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+              <a href="<%= skatespot_path(skatespot) %>" class="style-fix" >
+                 <div class="card card-sizing link-div">
+                  <% if skatespot.pic1.present? %>
+                  <div class="card-category-img" alt="skatepark or skate spot" style="background-image: url(<%= cl_image_path skatespot.pic1.key, height: 300, crop: :fill %>)">
+
+                  </div>
+                  <% end %>
+                  <p class="item-title text-center mt-2 style-fix"> <%= skatespot.name %></p>
+                  <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;"> <%= skatespot.location %> </p>
+
+                </div>
+                <!-- inclue code for edit and delete pundit-->
+              </a>
+              <br>
+              </div>
+            <% end %>
+          </div>
+    </div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+<style type="text/css">
+  .small-txt{
+    font-size:12px;
+  }
+  .selected{
+    padding:10px;
+    text-align: center;
+    width:70px;
+    border: 1px solid black;
+  }
+
+  .PriceInputs{
+    width:70px;
+    font-size:14px;
+  }
+
+.form-check-input {
+    margin: none;
+    height: 30px;
+    margin-left: 100px;
+}
+
+  .form-check{
+    margin-top: 10px;
+  }
+
+  .form-check-label{
+    margin-top: 5px;
+  }
+  .input-field-select{
+     height: 40px;
+     min-height:40px;
+  }
+  #search_type{
+    height:40px;
+    width:180px;
+    padding-left:5px;
+  }
+  .btn-new{
+    background-color: white;
+    border: 1px solid lightgrey;
+  }
+</style>
+
+
+
+<% if params[:spotsearch] != nil %>
+  <script type="text/javascript">
+    var allCheckboxInputs = document.querySelectorAll('.form-check-input');
+    var params = "<%= params[:spotsearch][:type_of_spot] %>";
+
+    console.log(JSON.parse(params.replace(/&quot;/g,'"')));
+    var i;
+    var j;
+    for (i = 0; i < allCheckboxInputs.length; i++) {
+      for (j = 0; j < JSON.parse(params.replace(/&quot;/g,'"')).length; j++){
+        if (allCheckboxInputs[i].value == JSON.parse(params.replace(/&quot;/g,'"'))[j]) {
+          allCheckboxInputs[i].checked = true;
+        }
+        }
+    }
+  </script>
+<% end %>
+<% if params[:spotsearch] != nil %>
+  <script type="text/javascript">
+    var allCheckboxInputs = document.querySelectorAll('.form-check-input');
+    var paramsCondition = "<%= params[:spotsearch][:type_of_spot]  %>";
+
+    console.log(JSON.parse(paramsCondition.replace(/&quot;/g,'"')));
+    var i;
+    var j;
+    for (i = 0; i < allCheckboxInputs.length; i++) {
+      for (j = 0; j < JSON.parse(paramsCondition.replace(/&quot;/g,'"')).length; j++){
+        if (allCheckboxInputs[i].value == JSON.parse(paramsCondition.replace(/&quot;/g,'"'))[j]) {
+          allCheckboxInputs[i].checked = true;
+        }
+      }
+    }
+  </script>
+<% end %>
+
+
+<div class="d-flex justify-content-around" data-target="infinite-scroll.pagination">
+  <%== pagy_nav @pagy if @pagy.pages > 1%>
+</div>
+
+

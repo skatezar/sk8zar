@@ -1,0 +1,295 @@
+
+
+<h2 class="text-center">YOUR CHATROOMS</h2>
+<br>
+<div class="container">
+<p style="position: relative;">
+    <a class="btn msg-button d-flex justify-content-center" data-toggle="collapse" href="#collapseSeller" role="button" aria-expanded="false" aria-controls="collapseExample">
+    SELLER CHATS
+    <% current_user.seller_chatrooms.each do |chatroom| %>
+      <% chatroom.messages.find do |message| %>
+        <% if message.read == false && message.user != current_user %>
+          <i class="fas fa-circle" style="color: red; position: absolute; right: 20px; top:12px;"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+    </a>
+</p>
+
+</p>
+<div class="collapse msgs-body" id="collapseSeller" >
+  <div class="card card-body background-color  desktop-div" >
+    <div id="seller-chats" class="seller-chats" >
+      <p class="explanation-txt-chats">These are chats about items you are selling</p>
+
+      <% if current_user.seller_chatrooms.present? %>
+
+
+      <% current_user.seller_chatrooms.order('created_at DESC').each do |chatroom| %>
+        <%= link_to chatroom_path(chatroom) do %>
+        <div class="card-product d-flex justify-content-between p-3 ">
+
+              <% chatroom.messages.find do |message| %>
+                <% if message.read == false && message.user != current_user %>
+                  <i class="fas fa-circle" style="color: red;"></i>
+                <% end %>
+              <% end %>
+             <% item = Item.find(chatroom.item_id) %>
+             <%= cl_image_tag item.photo.key, height: 300, crop: :fill %>
+            <div class="card-product-infos   ">
+              <h2> <%= link_to chatroom.item.title, chatroom_path(chatroom) %></h2>
+                <div class="location-box">
+                <i class="fas fa-map-marker-alt"  ></i>
+                <span> <%= item.location %></span>
+              </div>
+            </div>
+            <div>
+              <% if chatroom.user.username.present? %>
+                <span style="font-size:17px;">Buyer: <%= chatroom.user.username %></span>
+              <% else %>
+                <span style="font-size:17px;">Buyer: <%= chatroom.user.email.match(/[^@]*/)%></span>
+              <% end %>
+              <p> <%= chatroom.created_at.strftime("%d %B %Y") %></p>
+            </div>
+            <div>
+              <% if policy(chatroom).destroy? %>
+              <%= link_to chatroom_path(chatroom),
+                          method: :delete,
+                        data: { confirm: "Are you sure?" } do %>
+              <i class="fas fa-trash-alt icons-edit-delete delete-icon-large"></i>
+              <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <br>
+          <% end %>
+        <% end %>
+      <% else %>
+      <p>You do not have any seller chats</p>
+
+      <% end %>
+    </div>
+  </div>
+  <!-- mobile div -->
+  <div class="card card-body background-color  mobile-div">
+    <div id="seller-chats" class="seller-chats" >
+      <p class="explanation-txt-chats">These are chats about items you are selling</p>
+
+      <% if current_user.seller_chatrooms.present? %>
+
+      <% current_user.seller_chatrooms.order('created_at DESC').each do |chatroom| %>
+        <%= link_to chatroom_path(chatroom) do %>
+        <div class="card-product d-flex justify-content-between p-3" style="position: relative; height: 100%;">
+          <% chatroom.messages.find do |message| %>
+              <% if message.read == false && message.user != current_user %>
+                <i class="fas fa-circle" style="color: red; position: absolute; right: 4px; top: 4px;"></i>
+              <% end %>
+            <% end %>
+             <% item = Item.find(chatroom.item_id) %>
+             <%= cl_image_tag item.photo.key, height: 200, crop: :fill %>
+            <div class="card-product-infos">
+
+                <div class="location-box">
+
+
+                <% if chatroom.user.username.present? %>
+                <span style="font-size:17px;">Buyer: <%= chatroom.user.username %></span>
+              <% else %>
+                <span style="font-size:17px;">Buyer: <%= chatroom.user.email.match(/[^@]*/)%></span>
+              <% end %>
+                <p style="color: black;"> <%= chatroom.created_at.strftime("%d %B %Y") %></p>
+              </div>
+             </div>
+          </div>
+
+          <br>
+          <% end %>
+        <% end %>
+      <% else %>
+      <p>You do not have any seller chats</p>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+<br>
+
+<p style="position: relative;">
+  <a class="btn msg-button d-flex justify-content-center" data-toggle="collapse" href="#collapseBuyer" role="button" aria-expanded="false" aria-controls="collapseExample">
+    BUYER CHATS
+    <% current_user.chatrooms.each do |chatroom| %>
+      <% chatroom.messages.find do |message| %>
+        <% if message.read == false && message.user != current_user %>
+          <i class="fas fa-circle" style="color: red; position: absolute; right: 20px; top:12px;"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+  </a>
+</p>
+<div class="collapse msgs-body" id="collapseBuyer" style="width:100%;">
+  <div class="card card-body"  >
+    <div id="buyer-chats" class="buyer-chats desktop-div" >
+         <p class="explanation-txt-chats">These are chats about items you want to buy</p>
+          <% if current_user.chatrooms.present? %>
+
+            <% current_user.chatrooms.order('created_at DESC').each do |chatroom| %>
+            <%= link_to chatroom_path(chatroom) do %>
+            <div class="card-product d-flex justify-content-between p-3">
+              <% chatroom.messages.find do |message| %>
+                <% if message.read == false && message.user != current_user %>
+                  <i class="fas fa-circle" style="color: red;"></i>
+                <% end %>
+              <% end %>
+              <% item = Item.find(chatroom.item_id) %>
+              <%= cl_image_tag item.photo.key, height: 300, crop: :fill %>
+              <div class="card-product-infos">
+                <h2> <%= link_to chatroom.item.title, chatroom_path(chatroom) %></h2>
+
+                <div class="location-box">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span> <%= item.location %></span>
+                </div>
+              </div>
+            <div>
+              <% if chatroom.item.user.username.present? %>
+                <span style="font-size:17px;">Seller: <%= chatroom.item.user.username %></span>
+              <% else %>
+                <span style="font-size:17px;">Seller: <%= chatroom.item.user.email.match(/[^@]*/)%></span>
+              <% end %>
+              <p> <%= chatroom.created_at.strftime("%d %B %Y") %></p>
+            </div>
+            <div>
+              <% if policy(chatroom).destroy? %>
+              <%= link_to chatroom_path(chatroom),
+                          method: :delete,
+                        data: { confirm: "Are you sure?" } do %>
+              <i class="fas fa-trash-alt icons-edit-delete delete-icon-large"></i>
+              <% end %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+          <br>
+          <% end %>
+          <% else %>
+          <p>You do not have any buyer chats</p>
+          <% end %>
+        </div>
+        <div id="buyer-chats" class="buyer-chats mobile-div">
+         <p class="explanation-txt-chats">These are chats about items you want to buy</p>
+          <% if current_user.chatrooms.present? %>
+          <% current_user.chatrooms.order('created_at DESC').each do |chatroom| %>
+          <%= link_to chatroom_path(chatroom) do %>
+          <div class="card-product d-flex justify-content-between p-3" style="position: relative; height: 100%;">
+            <% chatroom.messages.find do |message| %>
+              <% if message.read == false && message.user != current_user %>
+                <i class="fas fa-circle" style="color: red; position: absolute; top:4px; right:4px;"></i>
+
+              <% end %>
+            <% end %>
+             <% item = Item.find(chatroom.item_id) %>
+             <%= cl_image_tag item.photo.key, height: 300, crop: :fill %>
+           <div class="card-product-infos">
+              <!-- <h2 style="font-size:14px;"> <%= link_to chatroom.name, chatroom_path(chatroom) %></h2> -->
+                <div class="location-box">
+
+
+                <% if chatroom.item.user.username.present? %>
+                  <span style="font-size:17px;">Seller: <%= chatroom.item.user.username %></span>
+                <% else %>
+                  <span style="font-size:17px;">Seller: <%= chatroom.item.user.email.match(/[^@]*/)%></span>
+                <% end %>
+                <p style="color:black;"> <%= chatroom.created_at.strftime("%d %B %Y") %></p>
+              </div>
+             </div>
+          </div>
+          <% end %>
+          <br>
+          <% end %>
+          <% else %>
+          <p>You do not have any buyer chats</p>
+          <% end %>
+        </div>
+      </div>
+  </div>
+</div>
+
+</div>
+<style type="text/css">
+  .background-color{
+  background-color: #F4F4F4;
+}
+.msgs-body{
+  border: 1px solid lightgrey;
+}
+</style>
+
+<style type="text/css">
+  .delete-icon-large{
+    color: #c70000;
+    font-size:34px;
+  }
+  .delete-icon-large:hover{
+    opacity: 0.5;
+  }
+  .explanation-txt-chats{
+    font-size:12px;
+    font-style:italic;
+  }
+  .msg-button{
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+  }
+  .msg-button:hover{
+    color: white;
+    background-color: black;
+  }
+  .location-box{
+    font-size:12px;
+    margin-top:5px;
+  }
+</style>
+
+
+
+
+<style type="text/css">
+  .card-product {
+  overflow: hidden;
+  height: 90px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+}
+
+.card-product img {
+  height: 100%;
+  width: 120px;
+  object-fit: cover;
+}
+
+.card-product h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.card-product .card-product-infos {
+  padding: 16px;
+}
+.border{
+  border: 1px solid black;
+}
+</style>
+

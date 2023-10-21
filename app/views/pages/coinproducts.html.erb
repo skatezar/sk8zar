@@ -1,0 +1,54 @@
+<div class="container">
+
+<h5 class="text-center">BUY ITEMS WITH SKATEZAR COINS</h5>
+
+<h2>
+    <a style=" display: block; margin: auto; width: 350px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        How does this work?
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body container">
+    <p>
+      All you need to do is click on 'buy with skatezar coins' on the product page, then enter your delivery address.
+    </p>
+    <strong>
+      <p>Free shipping! No payment information needed.</p>
+    </strong>
+  </div>
+</div>
+
+<p style="font-size:12px; font-style:italic;">click item for details</p>
+
+<div class="container mt-2 d-flex justify-content-center">
+  <div class="row d-flex justify-content-around" >
+
+  <% @coinproducts.order('created_at DESC').each do |item| %>
+    <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+        <a href="<%= item_path(item) %>" class="style-fix" >
+           <div class="card card-sizing link-div" >
+            <div class="card-category-img" style="background-image: url(<%= cl_image_path item.photo.key, height: 300, crop: :fill %>)">
+            </div>
+            <p class="item-title text-center mt-2 style-fix" > <%= item.title %> <%= item.size %></p>
+            <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;" >   <%= item.currency %><%= item.price %>   </span> | <%= item.location %> </p>
+              <p style="font-size:11px;" class="btn money m-2"><%= item.skatezarcoins %> SKATEZAR COINS</p>
+          </div>
+        </a>
+        <br>
+        <br>
+      </div>
+  <% end %>
+</div>
+</div>
+
+
+<br>
+
+</div>
+
+

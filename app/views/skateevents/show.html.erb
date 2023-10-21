@@ -1,0 +1,158 @@
+<div class="container">
+  <%= link_to "< back to all contest", skateevents_path, class: "btn btn-new" %>
+  <br>
+  <br>
+  <h5 class="text-center" style="font-weight:bold;">
+    <%= @skateevent.name_title %>
+  </h5>
+  <h6 class="text-center">
+    <%= @skateevent.location %>
+  </h6>
+<div class="desktop-div">
+<button onclick="copyToClipboard()" class="btn btn-new">+ Share Event</button>
+<br>
+<br>
+  <section class="d-flex justify-content-center">
+    <div style="width: 30%;">
+      <strong>
+        location:
+      </strong>
+      <p>
+          <%= @skateevent.location %>
+      </p>
+      <strong>
+        contest type:
+      </strong>
+      <p>
+          <%= @skateevent.contest_type %>
+      </p>
+      <strong>
+        address:
+      </strong>
+      <p>
+          <%= @skateevent.address %>
+      </p>
+      <strong>
+          date & time:
+      </strong>
+      <p>
+        <%= @skateevent.date2.strftime("%d %B %Y") %>
+         -
+        <%= @skateevent.time %>
+      </p>
+  </div>
+  <div style="width: 70%;">
+    <strong>
+      <p class="text-center">
+        description:
+      </p>
+    </strong>
+    <p class="text-center">
+      <%= @skateevent.description %>
+    </p>
+    <% if @skateevent.fblink.present? %>
+    <%= link_to "#{@skateevent.fblink}", target: "_blank" do %>
+        <i class="fab fa-facebook m-2" style="font-size:40px;"></i>
+      <% end %>
+    <% end %>
+    <% if @skateevent.youtubelink.present? %>
+      <%= link_to "#{@skateevent.youtubelink}", target: "_blank" do %>
+        <i class="fab fa-youtube" style="font-size:40px;"></i>
+      <% end %>
+    <% end %>
+    <br>
+    <br>
+    <% if @skateevent.googlemapslink.present? %>
+        <div class="d-flex">
+          <%= link_to 'google maps', @skateevent.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+        </div>
+      <% end %>
+  </div>
+
+  </section>
+  <br>
+  <%= cl_image_tag @skateevent.pic1.key, class: "d-block w-100",  crop: :fill %>
+  </div>
+
+<!-- mobile div -->
+
+<div class="mobile-div">
+      <strong>
+        location:
+      </strong>
+      <p>
+          <%= @skateevent.location %>
+      </p>
+      <% if @skateevent.googlemapslink.present? %>
+        <div class="d-flex justify-content-center">
+          <%= link_to 'google maps', @skateevent.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+        </div>
+      <% end %>
+      <br>
+      <strong>
+        contest type:
+      </strong>
+      <p>
+          <%= @skateevent.contest_type %>
+      </p>
+      <strong>
+        address:
+      </strong>
+      <p>
+          <%= @skateevent.address %>
+      </p>
+      <strong>
+          date & time:
+      </strong>
+      <p>
+        <%= @skateevent.date2.strftime("%d %B %Y") %>
+        -
+        <%= @skateevent.time %>
+      </p>
+    <strong>
+      <button onclick="copyToClipboard()" class="btn btn-new">+ Share Event</button>
+      <br>
+      <br>
+      <p class="text-center">
+        description:
+      </p>
+    </strong>
+    <p class="text-center">
+      <%= @skateevent.description %>
+    </p>
+
+  <%= cl_image_tag @skateevent.pic1.key, class: "d-block w-100",  crop: :fill %>
+  <br>
+  <p style="font-style:italic;">
+    further information
+  </p>
+  <% if @skateevent.fblink.present? %>
+    <%= link_to "#{@skateevent.fblink}", target: "_blank" do %>
+        <i class="fab fa-facebook m-2" style="font-size:40px;"></i>
+      <% end %>
+    <% end %>
+    <% if @skateevent.youtubelink.present? %>
+      <%= link_to "#{@skateevent.youtubelink}", target: "_blank" do %>
+        <i class="fab fa-youtube" style="font-size:40px;"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+  function copyToClipboard(text) {
+var inputc = document.body.appendChild(document.createElement("input"));
+inputc.value = window.location.href;
+inputc.focus();
+inputc.select();
+document.execCommand('copy');
+inputc.parentNode.removeChild(inputc);
+alert("Link copied!");
+$('html,body').scrollTop(0);
+
+}
+</script>

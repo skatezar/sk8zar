@@ -1,0 +1,330 @@
+<script type="text/javascript">
+  function Radius(){
+    let radius = document.getElementById('locationradius1').value
+    document.getElementById("radiuskm1").innerHTML = radius + "km radius"
+    console.log('hi')
+  };
+</script>
+<div class="d-flex">
+    <div class="container" style="width: 200px;">
+    <%= simple_form_for :search, url: root_path, method: "GET" do |f| %>
+    <% if params[:search] == nil %>
+    <!-- filter category -->
+
+      <p>
+        <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseLocation" role="button" aria-expanded="false" aria-controls="collapseExample">
+         LOCATION
+        </a>
+      </p>
+      <div class="collapse" id="collapseLocation">
+        <div class="card d-flex justify-content-center">
+
+          <% if params[:search].present? %>
+            <% if params[:search][:location] == "" %>
+              <%= f.text_field :location,  :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+              <br>
+              <p>
+                select radius
+              </p>
+              <!-- radius -->
+              <% if params[:search][:radius].present? %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => "#{params[:search][:radius]}", :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+              <% else %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+              <% end %>
+              <!-- end of radius -->
+            <% else %>
+              <%= f.text_field :location, :value => "#{params[:search][:location]}", :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+              <br>
+              <p>
+                select radius
+              </p>
+              <!-- radius -->
+              <% if params[:search][:radius].present? %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => "#{params[:search][:radius]}", :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+
+                </p>
+              <% else %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+
+                </p>
+              <% end %>
+              <!-- end of radius -->
+
+
+            <% end %>
+          <% else %>
+          <div id="map" style="display:none;"></div>
+          <%= f.text_field :location, :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+          <br>
+          <p>
+            select radius
+          </p>
+           <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+            <p id="radiuskm1">
+
+            </p>
+            <div class="d-flex justify-content-center">
+              <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+            </div>
+          <% end %>
+        </div>
+        <br>
+
+      </div>
+    <p>
+      <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseCategory" role="button" aria-expanded="false" aria-controls="collapseExample">
+        CATEGORY
+      </a>
+    </p>
+    <div class="collapse" id="collapseCategory">
+      <div class="card">
+          <%= f.input :categories, as: :check_boxes, collection: $categories, label: "",  include_hidden: false %>
+      </div>
+    </div>
+      <p class="mt-3">
+        <a class="btn filter-link w-100 " data-toggle="collapse" href="#collapseCondition" role="button" aria-expanded="false" aria-controls="collapseExample">
+         CONDITION
+        </a>
+      </p>
+      <div class="collapse" id="collapseCondition">
+        <div class="card">
+          <%= f.input :conditions, as: :check_boxes, collection: $conditions, label: "",   include_hidden: false %>
+        </div>
+      </div>
+
+      <p class="mt-3">
+        <a class="btn filter-link w-100" data-toggle="collapse" href="#collapsePrice" role="button" aria-expanded="false" aria-controls="collapseExample">
+         PRICE
+        </a>
+      </p>
+      <div class="collapse" id="collapsePrice">
+        <div class="card card-body">
+          <div class="d-flex justify-content-center">
+             <%= f.input :pricemin, as: :numeric, :input_html => { :value => 0, :min => 0, :class => "PriceInputs mr-1"}, label: false, :required => true %>
+             -
+            <%= f.input :pricemax,  as: :numeric, :input_html => { :value => 999, :class => "PriceInputs ml-1"}, label: false, :required => true %>
+          </div>
+        </div>
+      </div>
+    <div class="container">
+    <div class="d-flex justify-content-center">
+      <%= f.submit "Search", class: "btn sell-link w-100 mt-4 ", data: { disable_with: "Searching..." }%>
+    </div>
+    <br>
+    <% else %>
+
+
+       <!-- filter category -->
+
+
+       <p>
+          <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseLocation" role="button" aria-expanded="true" aria-controls="collapseExample">
+           LOCATION
+          </a>
+        </p>
+        <div class="collapse show" id="collapseLocation">
+          <div class="card d-flex justify-content-center">
+
+          <% if params[:search].present? %>
+            <% if params[:search][:location] == "" %>
+              <%= f.text_field :location,  :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+              <br>
+              <!-- radius -->
+              <% if params[:search][:radius].present? %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => "#{params[:search][:radius]}", :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+                </div>
+              <% else %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+                </div>
+              <% end %>
+              <!-- end of radius -->
+            <% else %>
+              <%= f.text_field :location, :value => "#{params[:search][:location]}", :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+              <br>
+              <!-- radius -->
+              <% if params[:search][:radius].present? %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => "#{params[:search][:radius]}", :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+                </div>
+              <% else %>
+                <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+                <p id="radiuskm1">
+                  <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+                </div>
+              <% end %>
+              <!-- end of radius -->
+
+            <% end %>
+          <% else %>
+          <div id="map" style="display:none;"></div>
+          <%= f.text_field :location, :class => "controls", placeholder: "Address or City", class: "locationSearchInput w-100 pl-2 input-field-location" %>
+          <br>
+           <%= f.range_field :radius, :min=>1, :max=>250, :value => 250, :class=>"slide", :id=>"locationradius1", :onchange => 'Radius()'%>
+            <p id="radiuskm1">
+              <% if params[:search][:radius].present? %>
+                    <%= params[:search][:radius]%> km radius
+              <% end %>
+            </p>
+            <div class="d-flex justify-content-center">
+              <%= f.submit "Search", class: "btn login-btn w-100  ", data: { disable_with: "Searching..." }%>
+            </div>
+          <% end %>
+        </div>
+        <br>
+
+      </div>
+      <p>
+        <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseCategory" role="button" aria-expanded="true" aria-controls="collapseExample">
+          CATEGORY
+        </a>
+      </p>
+      <div class="collapse show" id="collapseCategory" style="margin-top:-15px; margin-bottom:15px;">
+        <div class="card">
+
+              <%= f.input :categories, as: :check_boxes, collection: $categories, label: "",  include_hidden: false %>
+
+        </div>
+      </div>
+        <p>
+          <a class="btn filter-link w-100" data-toggle="collapse" href="#collapseCondition" role="button" aria-expanded="true" aria-controls="collapseExample">
+           CONDITION
+          </a>
+        </p>
+        <div class="collapse show" id="collapseCondition" style="margin-top:-15px; margin-bottom:15px;">
+          <div class="card">
+              <%= f.input :conditions, as: :check_boxes, collection: $conditions, label: "",  include_hidden: false %>
+
+          </div>
+        </div>
+
+        <p>
+          <a class="btn filter-link w-100" data-toggle="collapse" href="#collapsePrice" role="button" aria-expanded="true" aria-controls="collapseExample">
+           PRICE
+          </a>
+        </p>
+        <div class="collapse show" id="collapsePrice">
+          <div class="d-flex justify-content-center">
+             <%= f.input :pricemin, as: :numeric, :input_html => { :value => "#{params[:search][:pricemin]}", :min => 0, :class => "PriceInputs mr-1"}, label: false, :required => true %>
+             -
+            <%= f.input :pricemax,  as: :numeric, :input_html => { :value => "#{params[:search][:pricemax]}", :class => "PriceInputs ml-1"}, label: false, :required => true %>
+          </div>
+        </div>
+
+      <div class="container">
+      <div class="d-flex justify-content-center">
+        <%= f.submit "Search", class: "btn sell-link w-100 mt-4 ", data: { disable_with: "Searching..." }%>
+      </div>
+      <br>
+    <% end %>
+      </div>
+      </div>
+
+
+        <% end %>
+      </div>
+<style type="text/css">
+  .small-txt{
+    font-size:12px;
+  }
+  .selected{
+    padding:10px;
+    text-align: center;
+    width:70px;
+    border: 1px solid black;
+  }
+
+  .PriceInputs{
+    width:70px;
+    font-size:14px;
+  }
+
+
+
+  .form-check{
+    margin-top: 10px;
+  }
+
+  .form-check-label{
+    margin-top: 5px;
+  }
+
+</style>
+
+<% if params[:search] != nil %>
+  <script type="text/javascript">
+    var allCheckboxInputs = document.querySelectorAll('.form-check-input');
+    var params = "<%= params[:search][:categories] %>";
+
+    console.log(JSON.parse(params.replace(/&quot;/g,'"')));
+    var i;
+    var j;
+    for (i = 0; i < allCheckboxInputs.length; i++) {
+      for (j = 0; j < JSON.parse(params.replace(/&quot;/g,'"')).length; j++){
+        if (allCheckboxInputs[i].value == JSON.parse(params.replace(/&quot;/g,'"'))[j]) {
+          allCheckboxInputs[i].checked = true;
+        }
+        }
+    }
+  </script>
+<% end %>
+<% if params[:search] != nil %>
+  <script type="text/javascript">
+    var allCheckboxInputs = document.querySelectorAll('.form-check-input');
+    var paramsCondition = "<%= params[:search][:conditions] %>";
+
+    console.log(JSON.parse(paramsCondition.replace(/&quot;/g,'"')));
+    var i;
+    var j;
+    for (i = 0; i < allCheckboxInputs.length; i++) {
+      for (j = 0; j < JSON.parse(paramsCondition.replace(/&quot;/g,'"')).length; j++){
+        if (allCheckboxInputs[i].value == JSON.parse(paramsCondition.replace(/&quot;/g,'"'))[j]) {
+          allCheckboxInputs[i].checked = true;
+        }
+      }
+    }
+  </script>
+<% end %>
+<!--
+<script type="text/javascript">
+  checkedLabelsArray = document.querySelectorAll(".form-check-input")
+  var params = "<%= @conditions %>"
+  console.log(params)
+</script> -->

@@ -1,0 +1,84 @@
+
+<audio controls  id="bang" style="display:none;">
+  <source src="https://res.cloudinary.com/diopgwo4d/video/upload/v1618842491/bang_pm87kx.mp3" type="audio/ogg">
+
+
+</audio>
+
+<script type="text/javascript">
+  var bang = document.getElementById("bang");
+
+
+  window.onload = function() {
+    bang.play();
+}
+</script>
+
+
+
+
+<% stances = ['normal', 'fakie', 'nollie', 'switch'] %>
+<% flip = [ 'frontside 180 heelflip', 'bigspin kickflip', 'bigspin heelflip', 'varial flip',
+'varial heel', 'hardflip', 'inward heel', 'backside 360', 'frontside 360', 'ghetto bird', 'inward heel revert',
+'540 flip', '540 bigspin', 'backside 360 kickflip', 'gazelle spin', 'doubleflip', 'tripple flip',
+'backside 180 double flip', 'double heelflip', 'varial heel revert', 'varial flip revert',
+'kickflip sexchange', 'hospital flip' ] %>
+
+
+
+
+<div class="container">
+
+  <h2 class="text-center"> WELCOME TO SKATEDICE! </h2>
+    <p class="text-center mt-3" style="font-size:24px; font-weight: bold;">Level: HARD 😵</p>
+
+<br>
+  <h3 class="text-center" style="background-color: white; padding:50px; border: 1px solid black;">
+
+     <%= stances.sample %>
+  <%= flip.sample %>
+
+
+  </h3>
+
+  <br>
+
+  <div class="d-flex justify-content-around">
+
+
+      <%= button_to "EASY", skatediceeasy_path, :method => :get, class: "btn btn-primary" %>
+      <%= button_to "MEDIUM", skatedicemedium_path, :method => :get, class: "btn btn-primary" %>
+      <%= button_to "HARD", skatedicehard_path, :method => :get, class: "btn btn-primary"%>
+
+  </div>
+
+
+<br>
+  <!-- question 1 -->
+      <p>
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq11" role="button" aria-expanded="false" aria-controls="collapseq11">
+
+          <span>How to Play?</span>
+          <span> + </span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq11">
+        <div class="card card-body">
+          <p> How to play </p>
+            <ul>
+              <li>Bet (with or without $) with a friend </li>
+              <li>Click play to generate a random trick</li>
+              <li> If you land the trick, your friend pays you </li>
+              <li> If you don't land the trick, you pay your friend </li>
+              <li> Instead of money, you can also play it like a game of SKATE </li>
+
+            </ul>
+        </div>
+      </div>
+
+</div>
+
+
+
+<%= render 'othergames' %>
+

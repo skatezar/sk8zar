@@ -1,0 +1,40 @@
+<div class="container">
+  <% @item = Item.find(params[:item_id]) %>
+
+  <h4 class="text-center">PROMOTE YOUR ITEM</h4>
+  <h6 class="text-center">Cost: <span style="color: red;"> 2 skatezar coins</span></h6>
+
+  <div class="d-flex justify-content-center">
+
+    <div>
+    <p class="text-center">
+      <%= @item.title %>
+    </p>
+
+   <% if @item.photo.present? %>
+    <div class="card card-sizing link-div m-2" style="border:none;">
+      <div class="card-category-img" style="background-image: url(<%= cl_image_path @item.photo.key, height: 300, crop: :fill %>)">
+      </div>
+    </div>
+  <% end %>
+    </div>
+  </div>
+
+<div class="d-flex justify-content-center">
+  <!-- define total here -->
+  <% if current_user.coins_earned - current_user.coins_expensed >= 2 %>
+    <%= link_to 'PROMOTE', promoteitemsuccessfully_path(:item_id => @item.id),  id: "promote_button", class: "btn btn-new" %>
+  <% else %>
+  <div>
+    <button class="btn btn-new" style="display: block; margin: auto;" disabled >PROMOTE </button>
+    <p class="mt-1">You do not have enough skatezar coins</p>
+    <%= link_to "EARN NOW!!!", communitytasks_path, class: "btn btn-new d-flex justify-content-center money" %>
+  </div>
+
+  <% end %>
+</div>
+
+
+</div>
+
+

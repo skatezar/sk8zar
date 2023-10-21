@@ -1,0 +1,30 @@
+<div class="container">
+
+  <h5 class="text-center">Your Orders</h5>
+  <br>
+  <% @orders.each do |order| %>
+
+  <div class="container p-3" style="border: 1px solid lightgrey; background-color:white;">
+    <div  class="text-center">
+      <h2><%= order.item.title %></h2>
+        <p><%= order.item.skatezarcoins %> skatezar coins</p>
+        <% @seconds = order.created_at -  Time.now %>
+        <% @hours = @seconds/60/60 %>
+
+        <% if @hours >= 48 %>
+          <p>status: <strong>being delivered</strong></p>
+        <% elsif @hours < 48 %>
+          <p>status: <strong>not yet shipped</strong></p>
+        <% elsif @hours > 300 %>
+          <p>status: <strong>arrived</strong></p>
+        <% end %>
+    </div>
+    <div>
+      <div class="card-category-img" style="background-image: url(<%= cl_image_path order.item.photo.key, height: 200, crop: :fill %>)"></div>
+    </div>
+  </div>
+  <hr>
+    <br>
+  <% end %>
+
+</div>

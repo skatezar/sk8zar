@@ -1,0 +1,109 @@
+
+
+<!-- create effect so that ONLY WHEN category is selected, brand and size appears -->
+<div class="ml-3">
+  <div class="d-flex justify-content-center">
+    <h4 class="" style="font-weight:bold;">Edit your donation</h4>
+  </div>
+  <br>
+
+</div>
+<div class="container" style="max-width: 500px;">
+  <%= form_for(@donation) do |f| %>
+
+    <div class="card">
+      <h6 class="mt-5">TITLE</h6>
+      <%= f.text_field :title, :required => false, :maxlength => 30, class: "input-field pl-3" %>
+      <hr>
+    </div>
+    <h5 class="mt-5">DESCRIPTION</h5>
+    <div class="card mt-2">
+      <%= f.text_area(:description, :required => true, size: '50x10', placeholder: "I bought this recently but the size doesn't fit... Skated only once.", class: "light-border")%>
+    </div>
+
+
+
+    <h5 class="mt-4">LOCATION</h5>
+      <%= f.text_field :location, :required => true, placeholder: "City, Country", class: "w-100 font-family input-field locationSearchInput" %>
+      <br> <br>
+      <%= f.text_field :address, :required => true, placeholder: "Address / Specific location", class: "w-100 font-family input-field  " %>
+
+    <br>
+    <h5>GOOGLE MAPS (OPTIONAL)</h5>
+      <%= f.text_field(:googlemapslink, size: '50x10', placeholder: "Add a link to the google maps location", class: "w-100 font-family input-field")%>
+    <br>
+<br>
+<p style="font-style:italic; font-size:11px;">You cannot edit your images</p>
+<div class="container d-flex justify-content-around">
+  <% if @donation.pic1.present? %>
+    <div class="card card-sizing link-div m-2" style="border:none;">
+      <div class="card-category-img" style="background-image: url(<%= cl_image_path @donation.pic1.key, height: 300, crop: :fill %>)">
+      </div>
+    </div>
+  <% end %>
+    <% if @donation.pic2.present? %>
+      <div class="card card-sizing link-div m-2" style="border:none;">
+        <div class="card-category-img" style="background-image: url(<%= cl_image_path @donation.pic2.key, height: 300, crop: :fill %>)">
+        </div>
+      </div>
+    <% end %>
+ <% if @donation.pic3.present? %>
+    <div class="card card-sizing link-div m-2" style="border:none;">
+    <div class="card-category-img" style="background-image: url(<%= cl_image_path @donation.pic3.key, height: 300, crop: :fill %>)">
+    </div>
+    </div>
+  <% end %>
+
+</div>
+
+    <div class="card mt-4">
+          <%= f.button 'Update Skatespot'.html_safe, id: 'upload-btn', type: :submit, class: "upload-btn",
+          data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Uploading..." } %>
+    </div>
+
+
+
+<!-- show hide div https://stackoverflow.com/questions/16015933/how-can-i-show-a-hidden-div-when-a-select-option-is-selected -->
+
+<% end %>
+
+
+
+
+<script type="text/javascript">
+  var photo1 = document.getElementById('item_photo');
+  var uploadBtn = document.getElementById('upload-btn');
+
+
+  uploadBtn.addEventListener("click", (event) => {
+    if (photo1.value == "") {
+      alert('Please upload an image in the required field')
+    }
+  });
+</script>
+
+<!-- max file size -->
+<script type="text/javascript">
+  var uploadField = document.querySelectorAll(".uploadFile");
+  console.log(uploadField)
+
+  for (i = 0; i < uploadField.length; i++) {
+    uploadField[i].onchange = function() {
+    if(this.files[0].size > 10485760)
+    {
+       alert("File is too big! Maximum 10MB");
+       this.value = "";
+    };
+};
+  }
+
+
+</script>
+
+<style type="text/css">
+   #skatespot_type_of_spot{
+    height:40px;
+    width:100%;
+    border-color: lightgrey;
+  }
+</style>

@@ -1,0 +1,36 @@
+
+<span style="display: block; margin: auto;  background-color: white;">
+<section style="  font-family: 'Helvetica';
+   margin: 10px;
+   width:100vh; ">
+
+<h1 style="text-align:center;">SKATEZAR</h1>
+
+<p style=" text-align: center;  padding: 15px; font-size:24px; background-color: rgba(238, 238, 238, 1);">Your item is now online</p>
+
+<div style="background-color: rgba(238, 238, 238, 1); padding: 15px;">
+  <p style="text-align: center;">
+  <%= @item.condition %> <%= @item.brand %> <%= @item.category %> <%= @item.size %>
+  </p>
+  <div style=" text-align: center;">
+    <%= cl_image_tag @item.photo.key, height: 150, crop: :fill %>
+  </div>
+</div>
+
+<br>
+
+<div style="background-color: rgba(238, 238, 238, 1);">
+  <br>
+  <div style="  text-align: center;">
+    <a href="mailto:office@skatezar.com" style=" color: black;
+    font-size:14px;">office@skatezar.com</a>
+  </div>
+  <br>
+
+</div>
+
+</div>
+
+</section>
+
+</span>

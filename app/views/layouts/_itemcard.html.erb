@@ -1,0 +1,70 @@
+<div class="container mt-2 d-flex justify-content-center">
+  <div class="row d-flex justify-content-around" >
+    <% if params[:query] == nil && params[:search] == nil %>
+    <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+
+          <%= link_to coinproducts_path do %>
+           <div class="card card-sizing link-div" style="border: 2px solid rgba(255, 99, 71, 1);">
+
+            <div class="card-category-img" style="background-color: transparent;">
+
+              <h1 style="color: black; font-size:80px;">₿</h1>
+              <!-- <p style="color: #85bb65; font-size: 19px; margin-top:15px;"
+              class="text-center">FEATURED</p> -->
+            </div>
+            <p class="text-center mt-3">USE SKATEZAR COINS TO BUY ITEMS</p>
+          </div>
+          <!-- inclue code for edit and delete pundit-->
+
+        <% end %>
+        <br>
+    </div>
+  <% end %>
+    <% @items.order('created_at DESC').each do |item| %>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-3 d-flex justify-content-center mb-3 mt-4">
+          <a href="<%= item_path(item) %>" class="style-fix" >
+             <div class="card card-sizing link-div" >
+              <div class="card-category-img" style="background-image: url(<%= cl_image_path item.photo.key, height: 300, crop: :fill %>)">
+              <% if item.price == 0 %>
+                <p style="color: red; font-size: 25px; margin-top: 50px;"
+                class="text-center">FOR FREE</p>
+
+              <% elsif item.user.distributor == true %>
+              <p style="color: #85bb65; font-size: 19px; margin-top: 50px;"
+                class="text-center">FEATURED!</p>
+              <% end %>
+              </div>
+              <p class="item-title text-center mt-2 style-fix" > <%= item.title %> <%= item.size %></p>
+
+              <p class="sub-text text-center style-fix"><span class="price" style="font-size:12px;" >   <%= item.currency %><%= item.price %>   </span> | <%= item.location %> </p>
+
+              <% if item.user.admin == true %>
+                <p style="font-size:11px;" class="btn money m-2"><%= item.skatezarcoins %> SKATEZAR COINS</p>
+              <% end %>
+
+            </div>
+          </a>
+          <br>
+          <br>
+              <div style="position: absolute;">
+            <% if policy(item).edit? %>
+                  <p style="color: #85bb65; font-size: 13px;">
+                   <%= link_to( 'CLICK TO PROMOTE', promoteitem_path(:item_id => item.id), class: "p-3 money text-center") %>
+                 </p>
+              <% end %>
+          </div>
+        </div>
+
+
+        <% end %>
+
+      </div>
+</div>
+
+
+<style type="text/css">
+.promote-item-btn{
+  font-size:11px;
+}
+</style>
+

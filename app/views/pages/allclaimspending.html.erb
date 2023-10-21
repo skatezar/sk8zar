@@ -1,0 +1,72 @@
+<div class="container">
+<h4 class="text-center">
+  <strong>
+    ALL CLAIMS MADE
+  </strong>
+</h4>
+<div class="d-flex justify-content-around">
+    <%= link_to "PENDING CLAIMS", allclaimspending_path, class: "btn btn-new money" %>
+    <%= link_to "COMPLETED CLAIMS", allclaimscompleted_path, class: "btn btn-new" %>
+  </div>
+<br>
+  <% @claims.each do |claim| %>
+    <% @task = Communitytask.find(claim.communitytask_id) %>
+  <div class="container p-3" style="border: 1px solid lightgrey; background-color:white;">
+    <div  class="text-center">
+      <h2><%= @task.title %></h2>
+      <p>
+        <strong>
+          USER:
+        </strong>
+      </p>
+      <p>
+        <%= claim.user.email %>
+      </p>
+      <% if claim.user.instagram.present? %>
+      <p>
+        <strong>
+          INSTAGRAM:
+        </strong>
+      </p>
+      <p>
+
+      <%= link_to "https://www.instagram.com/#{claim.user.instagram}", target: "_blank" do %>
+        <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+      <% end %>
+      </p>
+      <% end %>
+        <span>
+          <strong>
+            MESSAGE:
+          </strong>
+        <p><%= claim.content %></p>
+        </span>
+
+        <span>
+          <strong>
+            SKATEZAR COINS:
+          </strong>
+          <% @communitytask = Communitytask.find(claim.communitytask_id) %>
+          <p>
+            <%= @communitytask.coin_reward %>
+          </p>
+        </span>
+        <%= link_to( 'AWARD', coinsawarded_path(:communitytask_id => claim.communitytask_id, :claim_id => claim.id), class: "btn btn-new money-green") %>
+        <br>
+        <br>
+        <%= link_to communitytask_claim_path(@task, claim, :claim_id => claim.id),
+                  method: :delete,
+                  data: { confirm: "Are you sure? If you delete an item, you will delete all related messages as well!" } do %>
+        <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 30px;  color: #c70000;"></i>
+        <% end %>
+    </div>
+    <div>
+  </div>
+  <hr>
+</div>
+    <br>
+
+  <% end %>
+</div>
+
+

@@ -1,0 +1,41 @@
+.date-txt{
+    font-style:italic;
+    font-size:9px;
+  }
+
+.user-txt{
+  font-size:12px;
+}
+
+.justify-content-left{
+  justify-content: flex-start
+
+}
+
+.justify-content-right{
+  justify-content: flex-end;
+}
+
+.background-msg-current-user{
+  border-radius: 15px;
+  background-color: lightgrey;
+}
+
+.background-msg-other-user{
+  border-radius: 15px;
+  background-color: white;
+}
+
+.msg-content{
+  font-size:14px;
+}
+
+.send-btn{
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+.send-btn:hover{
+  opacity: 0.5;
+}

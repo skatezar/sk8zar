@@ -1,0 +1,58 @@
+<h2 class="text-center form-color mt-2">YOUR PROFILE</h2>
+<div class="container form-color mt-2">
+  <div class="d-flex justify-content-center mt-3">
+      <img class="avatar-large" alt="avatar" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+  </div>
+<%= simple_form_for(@user, url: update_my_profile_path, html: { method: :put }) do |f| %>
+
+  <div class="form-inputs">
+    <%= f.input :email, required: true, autofocus: true %>
+  </div>
+
+   <div class="card mt-4">
+         <!-- <a href="#"><i class="fab fa-instagram" style="font-size:25px;"></i></a> -->
+     <%= f.input :instagram, autofocus: true, placeholder: "example: skatezar" %>
+     <h6 class="small-txt">Connect your instagram <span>... it will increase your chances of selling products</span></h6>
+
+     <% if current_user.instagram.present? %>
+     <p><%= link_to "instagram.com/#{current_user.instagram.strip}", "https://www.instagram.com/#{current_user.instagram.strip}", class: "mt-1" %></p>
+     <% end %>
+
+    <%= f.input :username, autofocus: true %>
+
+      <p>Description </p>
+    <%= f.text_area :description,  label: false, autofocus: true %>
+
+    <br>
+    <p>Stance</p>
+    <%= f.select( :stance, ['Goofy','Regular'], { :include_blank => false },  {:class => 'input-field-select'}) %>
+
+    <br>
+
+ <div class="form-inputs">
+    <p>Location</p>
+    <%= f.text_field :location, placeholder: "City, Country", class: "pl-1 w-100 font-family input-field locationSearchInput" %>
+  </div>
+
+   <!--  <p>Add a link to your favorite insta post</p>
+    <%= f.input :instavideolink,  label: false, autofocus: true %>
+    <a href="https://help.instagram.com/372819389498306" target="_blank">
+      How do I find an instagram post link?
+    </a> -->
+
+
+  </div>
+  <br>
+  <div class=" form-action btn btn-flat btn-color d-flex justify-content-center">
+    <%= f.button :submit, "UPDATE", class: "btn generic-black-btn" %>
+  </div>
+<% end %>
+</div>
+
+
+<style type="text/css">
+  .small-txt{
+    font-size:10px;
+  }
+
+</style>

@@ -1,0 +1,23 @@
+<section style="z-index: 1; position: relative;">
+<!-- create effect so that ONLY WHEN category is selected, brand and size appears -->
+<div class="ml-3">
+  <div class="d-flex justify-content-center">
+    <h4 class="" style="font-weight:bold;">Register for the game of skate</h4>
+  </div>
+  <br>
+
+</div>
+<div class="container" style="max-width: 500px;">
+  <%= simple_form_for @participant do |f| %>
+    <p>
+      Your Instagram Username
+    </p>
+    <%= f.input :username, label: false, placeholder: "example: @skatezar" %>
+
+    <div class="d-flex justify-content-center">
+      <%= f.button :submit, 'Register', class: "upload-btn"  %>
+    </div>
+
+
+  <% end %>
+</section

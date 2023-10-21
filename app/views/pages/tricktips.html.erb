@@ -1,0 +1,21 @@
+<div class="container">
+  <h3 class="text-center">Trick Tips</h3>
+
+    <div class="search-form-control form-group">
+    <%= form_tag tricktips_path, method: :get do %>
+        <%= text_field_tag :tricksearch,
+          params[:tricksearch],
+          class: "form-control string required",
+          placeholder: "360 flip"
+    %>
+    <button name="button" type="submit" class="btn btn-flat">
+    <i class="fas fa-search"></i> <%= submit_tag "SEARCH", class: "search-button" %>
+    </button>
+    <% end %>
+
+</div>
+
+
+<hr>
+
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@skatezar/video/6955185935352974597" data-video-id="6955185935352974597" style="max-width: 605px;min-width: 325px;" ><section> <a target="_blank" title="@skatezar" href="https://www.tiktok.com/@skatezar">@skatezar</a> <p><a title="skateboarders" target="_blank" href="https://www.tiktok.com/tag/skateboarders">##skateboarders</a> <a title="skate" target="_blank" href="https://www.tiktok.com/tag/skate">##skate</a> <a title="skateboard" target="_blank" href="https://www.tiktok.com/tag/skateboard">##skateboard</a> <a title="skateboarding" target="_blank" href="https://www.tiktok.com/tag/skateboarding">##skateboarding</a> <a title="skatelife" target="_blank" href="https://www.tiktok.com/tag/skatelife">##skatelife</a> <a title="skateboardingisfun" target="_blank" href="https://www.tiktok.com/tag/skateboardingisfun">##skateboardingisfun</a> <a title="fy" target="_blank" href="https://www.tiktok.com/tag/fy">##fy</a> <a title="fypシ" target="_blank" href="https://www.tiktok.com/tag/fyp%E3%82%B7">##fypシ</a></p> <a target="_blank" title="♬ MONTERO (Call Me By Your Name) - Lil Nas X" href="https://www.tiktok.com/music/MONTERO-Call-Me-By-Your-Name-6942551356402042881">♬ MONTERO (Call Me By Your Name) - Lil Nas X</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>

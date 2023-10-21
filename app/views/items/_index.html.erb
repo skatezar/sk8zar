@@ -1,0 +1,211 @@
+<% content_for :meta_title, "SKATEZAR: Buy & Sell Skateboards" %>
+<% content_for :meta_description, "Skatezar is a reselling market for skateboarders. It is a community project with the aims of
+ 1) connecting local communities and 2) making skateboarding items cheaper." %>
+
+<div class="container d-flex justify-content-around">
+  <p style="color:black;">
+    <%= link_to 'A reselling market for skateboarders ', about_path, class: 'black', style: "font-weight:bold;"%>
+  </p>
+</div>
+<!-- be the first --><!--
+<div class="container d-flex justify-content-center">
+  <p>
+    <p class="text-center" style="">Be the first to upload an item in your location and...</p>
+  </p>
+</div>
+<div class="text-center">
+  <%= link_to 'become an Ambassador 🤝', ambassador_path, :style=>'background-color:white; padding: 10px; border:1px solid black;' %>
+</div> -->
+
+<!--
+<div class="container d-flex justify-content-center">
+  <p>
+    <p class="text-center" style="">Join our game of skate on this Sunday the 25th July at 16:00 @ Donauinsel</p>
+  </p>
+</div>
+<div class="text-center">
+  <%= link_to 'Join now 🤝', contests_path, :style=>'background-color:white; padding: 10px; border:1px solid black;' %>
+</div>
+<br>-->
+
+<div class="text-center">
+  <div class="d-flex justify-content-center" >
+    <%= link_to "Community Work & Skatezar Coins", communitytasks_path, class: "btn btn-new money" %>
+  </div>
+</div>
+<br>
+<div class="text-center">
+  <div class="d-flex justify-content-center" >
+    <%= link_to "+ Buy things with Skatezar Coins!", coinproducts_path, class: "btn btn-new" %>
+  </div>
+</div>
+<br>
+<% if current_user %>
+  <% if current_user.admin == true %>
+    <div class="text-center">
+      <div class="d-flex justify-content-center" >
+        <%= link_to "VIEW ORDERS", allorderspending_path, class: "btn btn-new money" %>
+      </div>
+      <br>
+       <div class="d-flex justify-content-center" >
+        <%= link_to "VIEW CLAIMS", allclaimspending_path, class: "btn btn-new money" %>
+      </div>
+      <br>
+       <div class="d-flex justify-content-center" >
+        <%= link_to "VIEW MESSAGES", allmessages_path, class: "btn btn-new money" %>
+      </div>
+      <br>
+       <div class="d-flex justify-content-center" >
+        <%= link_to "VIEW SOLD ITEMS", solditems_path, class: "btn btn-new money" %>
+      </div>
+  </div>
+<br>
+<% end %>
+<% end %>
+
+
+
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+
+<br>
+<div class="mobile-div">
+  <div class=" d-flex justify-content-around">
+  <p class="ml-2 text-center mt-2"> <%= @pagy.count %><%= 'item'.pluralize(@pagy.count) %> available </p>
+  <section class="d-flex justify-content-center">
+  <!-- Button trigger modal -->
+  <a type="button" class="filter-fix" style="color: black; font-size:19px; border: 1px solid black; padding: 2px 15px; height:35px;" data-toggle="modal" data-target="#filterModal">
+    FILTER
+  </a>
+  </section>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen" role="document" style="width:95%; height:100%;">
+    <div class="modal-content" style="padding:none; height:auto;">
+      <div class="d-flex m-3">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <br>
+      <div class="modal-body" style="padding:none; height:100%;">
+          <%= render "layouts/filterMobile" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- desktop div -->
+<div class="d-flex justify-content-center w-100">
+  <div class="desktop-div">
+    <% if params[:search].present? %>
+      <p class="ml-2 text-center"> <%= @pagy.count %> <%= 'item'.pluralize(@pagy.count) %> available </p>
+    <% else %>
+      <p class="ml-2 text-center"> <%= @pagy.count %> items available</p>
+    <% end %>
+    <%= render "layouts/filterDesktop" %>
+     <div>
+      <p class="text-center">
+        <%= link_to "Reset Filters", root_path  %>
+      </p>
+    </div>
+  </div>
+
+  <% if @items.length > 0 %>
+  <div>
+    <%= render "layouts/itemcard" %>
+  </div>
+  <% else %>
+   <div class="m-3">
+    <p class="text-center" style="font-style: italic;">There are currently no items available with your filters</p>
+    <% if params[:search].present? %>
+      <% if params[:search][:location] != "" %>
+        <% if Item.all.where(location: params[:search][:location]).length < 1 && params[:search][:location] != "" %>
+          <p class="text-center">
+            <%= link_to "Be the first to upload an item in #{params[:search][:location]} and get a free t-shirt", new_item_path, class: "text-center"  %>
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+   </div>
+  <% end %>
+</div>
+
+<br>
+<div class="container d-flex justify-content-center">
+
+  <%= link_to "Why are there no items in my city?", ambassador_path %>
+</div>
+<br>
+
+<div class="d-flex justify-content-around" data-target="infinite-scroll.pagination">
+  <%== pagy_nav @pagy if @pagy.pages > 1%>
+</div>
+
+<div class="container mobile-div">
+  <!-- question 1 -->
+      <p class="mt-3">
+        <a class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseq1" role="button" aria-expanded="false" aria-controls="collapseq1">
+          <span style="font-weight:bold;">We depend on community support</span>
+          <span> + </span>
+        </a>
+      </p>
+      <div class="collapse" id="collapseq1">
+        <div class="card card-body">
+           <p class="text-center">Help make skateboarding items cheaper by
+          posting a screenshot of this page on your instagram story and tagging us @skatezar :)</p>
+        </div>
+      </div>
+
+</div>
+
+<!-- necessary for places API ; maybe move to application.html..?-->
+
+<div id="map" style="display:none;"></div>
+
+<style type="text/css">
+  .black-btn{
+    background-color: black;
+    color: white;
+    text-align: center;
+    vertical-align: center;
+
+    padding: 5px 20px;
+
+    font-size:14px;
+  }
+
+  .black-btn:hover{
+    opacity:0.5;
+    background-color: black;
+    color: white;
+    text-align: center;
+    vertical-align: center;
+
+    padding: 5px 20px;
+
+    font-size:14px;
+  }
+
+/*    input[type="checkbox"]{
+
+    height: 30px;
+    width: 275px;
+  }*/
+
+  .filter-fix:hover{
+    font-size:19px;
+    border: 1px solid black;
+    padding: 2px 15px;
+    height:35px;
+    color: black;
+  }
+</style>
+
+
+
+

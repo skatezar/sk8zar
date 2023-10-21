@@ -1,0 +1,254 @@
+<div class="mobile-div">
+  <div class="d-flex justify-content-around">
+      <div>
+        <% if policy(@donation).edit? %>
+          <%= link_to edit_donation_path(@donation) do %>
+            <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+          <% end %>
+          <% end %>
+      </div>
+      <div>
+        <% if policy(@donation).destroy? %>
+        <%= link_to donation_path(@donation),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } do %>
+        <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 30px;  color: #c70000;"></i>
+        <% end %>
+        <% end %>
+      </div>
+  </div>
+  <br>
+<p style="font-size: 18px;" class="text-center"><%= link_to "Back to all donations", donations_path%></p>
+<div class="container">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+    </div>
+    <div class="carousel-item">
+      <% if @donation.pic2.present? %>
+      <%= cl_image_tag @donation.pic2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+    <div class="carousel-item">
+      <% if @donation.pic3.present? %>
+      <%= cl_image_tag @donation.pic3.key, class: "d-block w-100",  crop: :fill %>
+      <% else %>
+      <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+      <% end %>
+    </div>
+  </div>
+  <a style="color:black;" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @donation.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @donation.title %></h6>
+  <div>
+    <span><%= @donation.location %></span>
+  </div>
+  <hr>
+
+  <p class="subtitle mt-3 ">Date</p>
+  <p class="desc-txt"><%= @donation.date%></p>
+
+  <p class="subtitle mt-3 ">Time</p>
+  <p class="desc-txt"><%= @donation.time%></p>
+
+
+
+  <p class="subtitle mt-3 ">Specific Address</p>
+  <p class="desc-txt"><%= @donation.address%></p>
+
+
+  <p class="subtitle mt-3 ">Description</p>
+  <p class="desc-txt"><%= @donation.description%></p>
+
+
+</div>
+
+ <p class="text-center">
+  <% if @donation.user.username.present? %>
+      <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@donation.user.username}", show_user_path(@donation.user)%></p>
+     <% else %>
+      <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@donation.user.email.match(/[^@]*/)}", show_user_path(@donation.user)%></p>
+     <% end %>
+ </p>
+ <br>
+
+      <% if @donation.googlemapslink.present? %>
+       <div class="d-flex justify-content-center">
+          <%= link_to 'google maps', @donation.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+       </div>
+      <% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="desktop-div">
+  <div class="container">
+    <div class="d-flex bd-highlight">
+      <div class="p-2 flex-grow-1 bd-highlight">
+        <div class="d-flex justify-content-around">
+          <div><% if policy(@donation).edit? %>
+              <%= link_to edit_donation_path(@donation) do %>
+                <i class="fas fa-edit icons-edit-delete" style="font-size: 30px; color: #1ACB80;" ></i>
+              <% end %>
+              <% end %>
+          </div>
+          <div>
+            <% if policy(@donation).destroy? %>
+            <%= link_to donation_path(@donation),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } do %>
+            <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 30px;  color: #c70000;"></i>
+            <% end %>
+            <% end %>
+          </div>
+        </div>
+        <br>
+        <p style="font-size: 18px;" class="text-center"><%= link_to "Back to all donations", donations_path%></p>
+        <br>
+        <div class="container" style="max-width: 750px;">
+          <div id="carouselDesktopIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselDesktopIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselDesktopIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+            </div>
+            <div class="carousel-item">
+              <% if @donation.pic2.present? %>
+              <%= cl_image_tag @donation.pic2.key, class: "d-block w-100", alt: "No second image",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+            <div class="carousel-item">
+              <% if @donation.pic3.present? %>
+              <%= cl_image_tag @donation.pic3.key, class: "d-block w-100",  crop: :fill %>
+              <% else %>
+              <%= cl_image_tag @donation.pic1.key, class: "d-block w-100",  crop: :fill %>
+              <% end %>
+            </div>
+          </div>
+          <a style="color:black;" class="carousel-control-prev" href="#carouselDesktopIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselDesktopIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+      <div class="p-2 bd-highlight mt-4" style="max-width: 400px;">
+      <div class="mt-2 ml-1">
+  <p style="font-size:14px; font-style:italic; color: #B8B8B8;">posted on <%= @donation.created_at.strftime("%d %B %Y") %></p>
+  <h6 class="title"><%= @donation.title %></h6>
+  <div>
+    <span><%= @donation.location %></span>
+  </div>
+
+  <hr>
+  <p class="subtitle mt-3 ">Date</p>
+  <p class="desc-txt"><%= @donation.date%></p>
+
+  <p class="subtitle mt-3 ">Time</p>
+  <p class="desc-txt"><%= @donation.time%></p>
+
+
+
+  <p class="subtitle mt-3 ">Specific Address</p>
+  <p class="desc-txt"><%= @donation.address%></p>
+
+
+  <p class="subtitle mt-3 ">Description</p>
+  <p class="desc-txt"><%= @donation.description%></p>
+
+</div>
+
+      <p class="text-center">
+      <% if @donation.user.username.present? %>
+          <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@donation.user.username}", show_user_path(@donation.user)%></p>
+         <% else %>
+          <p style="font-size: 18px;" class="text-center"><%= link_to "posted by #{@donation.user.email.match(/[^@]*/)}", show_user_path(@donation.user)%></p>
+         <% end %>
+      </p>
+
+      <br>
+      <% if @donation.googlemapslink.present? %>
+        <div class="d-flex justify-content-center">
+          <%= link_to 'google maps', @donation.googlemapslink, target: '_blank', class: 'sell-link p-3' %>
+        </div>
+      <% end %>
+      </div>
+
+    </div>
+</p>
+
+  </div>
+
+</div>
+
+<style type="text/css">
+  .send-msg-btn-style{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+  }
+  .send-msg-btn-style:hover{
+    opacity: 0.5;
+  }
+  .send-msg-btn{
+    margin-top:20px;
+  }
+
+</style>
+<br>
+<div class="container">
+  <p>If you want to come, please register! Takes 10 seconds.</p>
+  <br>
+  <%= link_to '+ REGISTER', new_donation_donationreg_path(@donation), class: "btn-new p-2" %>
+  <br>
+  <br>
+  <p class="text-center">current list:</p>
+  <ul class="list-group">
+  <% @donation.donationreg.each do |donationreg| %>
+   <li class="ml-5">
+    <a href="https://www.instagram.com/<%= donationreg.content %>" target="_blank">
+        <%= donationreg.content %>
+        <a href="https://www.instagram.com/<%= donationreg.content %>"  target="_blank"><i class="fab fa-instagram" ></i></a>
+    </a>
+   </li>
+
+    <br>
+  <% end %>
+</ul>
+
+</div>
+

@@ -1,0 +1,40 @@
+// Import page-specific CSS files here.
+@import "home";
+@import "show";
+
+
+.pagy-btn{
+    color: red;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .filter-btn{
+    background-color: #8a0303;
+    color: white;
+    height:40px;
+    width:150px;
+    padding-top:8px;
+  }
+  .filter-link{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+  .input-field-location{
+    border:1px solid black;
+    height:40px;
+
+  }
+  .input-field-location:hover{
+    width:300px;
+    min-width:300px;
+  }
+  .btn-white{
+    background-color: white;
+    display: flex;
+    text-align: center;
+  }
+
+.black{
+    color: black;
+  }

@@ -1,0 +1,39 @@
+<div class="container">
+
+  <h5 class="text-center">Your Claims</h5>
+  <br>
+  <% @claims.each do |claim| %>
+  <% @task = Communitytask.find(claim.communitytask_id) %>
+  <div class="container p-3" style="border: 1px solid lightgrey; background-color:white;">
+    <%= link_to communitytask_path(@task) do %>
+    <div  class="text-center">
+
+      <h6>TASK:<span style="font-size:30px; font-weight: bold;"> <%= @task.title %></span></h6>
+      <h6>COINS:<span style="font-size:30px; font-weight: bold;"> <%= @task.coin_reward %></span></h6>
+      <h6>
+        <br>
+        <strong>STATUS</strong>
+        <br>
+
+        <% @timepassed = Time.now - claim.created_at %>
+        <br>
+        <% if claim.completed == true %>
+          <p class="money-green">COINS HAVE BEEN ADDED!</p>
+        <% elsif @timepassed > 86400 %>
+          <% if claim.completed == true %>
+            <p class="money-green">COINS HAVE BEEN ADDED!</p>
+          <% else %>
+            <p style="color: red;">COINS HAVE NOT BEEN ADDED!</p>
+          <% end %>
+        <% else %>
+          <p class="money-green">UNDER REVIEW - it takes us 24 hours to review!</p>
+        <% end %>
+      </h6>
+    </div>
+    <% end %>
+  </div>
+  <hr>
+    <br>
+  <% end %>
+
+</div>

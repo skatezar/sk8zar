@@ -1,0 +1,54 @@
+
+<div class="ml-3">
+  <div class="d-flex justify-content-center">
+    <h4 class="" style="font-weight:bold;">Add a new task</h4>
+  </div>
+  <br>
+
+</div>
+<div class="container" style="max-width: 500px;">
+  <%= form_for(@communitytask) do |f| %>
+
+  <% trueorfalse = [true, false] %>
+
+    <div class="card">
+      <h6 class="mt-5">TITLE</h6>
+      <%= f.text_field :title, :required => true, class: "input-field pl-3" %>
+      <hr>
+    </div>
+
+    <h5 class="mt-4">DESCRIPTION</h5>
+      <br>
+      <%= f.text_area(:description, :required => true, size: '50x10', placeholder: "Any other important details?", class: "light-border")%>
+    <br>
+    <h5 class="mt-4">HOW WILL YOU VERIFY?</h5>
+      <br>
+      <%= f.text_area(:verification, size: '50x10', placeholder: "Any other important details?", class: "light-border")%>
+    <br>
+    <br>
+    <h5>AUTOMATIC VERIFICATION?</h5>
+    <div class="d-flex justify-content-center">
+      <%= f.select( :automatic_verification, trueorfalse, { :include_blank => false },  {:class => 'input-field-select'}) %>
+    </div>
+
+    <div class="card">
+      <h6 class="mt-5">Skatezar Coin Reward</h6>
+      <%= f.text_field :coin_reward, placeholder: "example: 3", :required => true, :maxlength => 30, class: "input-field pl-3" %>
+      <hr>
+    </div>
+
+
+    <div class="card mt-4">
+          <%= f.button 'Upload Task'.html_safe, id: 'upload-btn', type: :submit, class: "upload-btn",
+          data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Uploading..." } %>
+    </div>
+</div><!-- container -->
+
+
+
+
+<!-- show hide div https://stackoverflow.com/questions/16015933/how-can-i-show-a-hidden-div-when-a-select-option-is-selected -->
+
+<% end %>
+
+

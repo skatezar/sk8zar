@@ -1,0 +1,241 @@
+<div class="container">
+  <div class="row">
+    <div class="main-div mt-3">
+      <div class="col-12 col-md-6 mt-2">
+        <div class="d-flex justify-content-around">
+          <h1><%= link_to "SKATEZAR", root_path, class: "mt-1 nav-link skatezar-nav" %></h1>
+          <% if policy(Item).create? %>
+            <%= link_to "SELL", new_item_path, class: "mt-2 navbar-btns sell-link" %>
+            <% end %>
+          <% if user_signed_in? %>
+            <% messages_dot_class = "notification-new-message " + (current_user.unread_messages? ? "d-block" : "") %>
+          <div class="mediaquerysettings">
+            <div class="large-screen-navbar">
+              <span class="nav-item dropdown">
+                <% all_chatrooms = current_user.chatrooms + current_user.seller_chatrooms %>
+                <% all_chatrooms.each do |chatroom| %>
+                  <% chatroom.messages.find do |message| %>
+                    <% if message.user != current_user && message.read == false %>
+                      <i class="fas fa-circle" style="color: red; position: absolute; left:10px;"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <img class="avatar-bordered  dropdown-toggle mt-1 ml-3" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://process.fs.grailed.com/AJdAgnqCST4iPtnUxiGtTz/j8udEaQ6QR1XlgOOGauR" />
+
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                    <div class="center-this-block">
+                        <div style="position: relative;">
+                          <%= link_to chatrooms_path, class: "nav-link", id: 'nav-messages', data: { user_id: current_user.id } do %>
+                              <span class="<%= messages_dot_class %> mr-2"><i class="fas fa-circle" style="position: absolute; top: 18px; left:5px;"></i></span>
+                              <p style="color: black; font-size:18px;" class="hover-underline">Messages 💬</p>
+                            <% end %>
+                        </div>
+                            <br>
+
+                          <p style="margin-top:-10px;"><%= link_to "My Account 🔑", my_profile_path, class: "ml-3 dropdown-links" %></p>
+                          <br>
+                            <p><%= link_to "My Items 🛹", user_my_items_path(current_user), class: "ml-3 dropdown-links" %></p>
+                          <br>
+                          <p><%= link_to "My Orders ₿", myorders_path, class: "ml-3 dropdown-links" %></p>
+                          <br>
+                          <p><%= link_to "My Claims ₿", myclaims_path, class: "ml-3 dropdown-links" %></p>
+
+                          <hr>
+                          <p><%= link_to('Logout', destroy_user_session_path, method: :delete, class: "ml-3 dropdown-links") %></p>
+                  </div>
+                </div>
+              </span>
+            </div>
+            <div class="small-screen-navbar"  style="position:relative;" >
+                <input data-target="#exampleModalLong" style="width:30px; height:30px;"  class="mt-2 dropdown-toggle ml-3" data-toggle="modal"  type="image"  src="https://res.cloudinary.com/diopgwo4d/image/upload/v1619645790/burgericon_new_iydcbi.png"/>
+                <% all_chatrooms.each do |chatroom| %>
+                  <% chatroom.messages.find do |message| %>
+                    <% if message.user != current_user && message.read == false %>
+                      <i class="fas fa-circle" style="color: red; position: absolute; left:10px;"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+            </div>
+          </div>
+
+          <% else %>
+            <%= link_to "LOGIN", new_user_session_path, class: "ml-3 mt-2 navbar-btns login-btn" %>
+            <div class="mobile-div">
+              <input data-target="#notloggedinModal" style="width:30px; height:30px;" class="mt-2 dropdown-toggle ml-3" data-toggle="modal"  type="image"  src="https://res.cloudinary.com/diopgwo4d/image/upload/v1619645790/burgericon_new_iydcbi.png"/>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="search-form-control form-group">
+      <%= form_tag root_path, method: :get do %>
+          <%= text_field_tag :query,
+            params[:query],
+            class: "form-control string required",
+            placeholder: "new board vienna"
+      %>
+          <button name="button" type="submit" class="btn btn-flat">
+            <i class="fas fa-search"></i> <%= submit_tag "SEARCH", class: "search-button" %>
+          </button>
+          <% end %>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<% if user_signed_in? %>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen" role="document" style="width:95%; ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">SKATEZAR</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: white;">
+        <div style="position: relative;">
+          <%= link_to chatrooms_path, class: "nav-link", id: 'nav-messages', data: { user_id: current_user.id } do %>
+              <span class="<%= messages_dot_class %> mr-2"><i class="fas fa-circle" style="position: absolute; top: 18px; left:5px;"></i></span>
+              <p style="color: black; " class="hover-underline txt-medium">Messages 💬</p>
+            <% end %>
+        </div>
+            <br>
+
+          <p style="margin-top:-10px;"><%= link_to "My Account 🔑", my_profile_path, class: "ml-3 dropdown-links txt-medium" %></p>
+
+          <br>
+            <p><%= link_to "My Items 💵 ", user_my_items_path(current_user), class: "ml-3 dropdown-links txt-medium" %></p>
+            <br>
+            <p><%= link_to "My Orders ₿", myorders_path, class: "ml-3 dropdown-links" %></p>
+            <br>
+            <p><%= link_to "My Claims ₿", myclaims_path, class: "ml-3 dropdown-links" %></p>
+            <hr>
+          <br>
+          <p><%= link_to("Skatespots 📍", skatespots_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Skate Games 🛹", skatedice_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Skate Contests 🛹", skateevents_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Charities 🙏", community_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Local Donations 🤝 ", donations_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <hr>
+          <p><%= link_to("About Us 👋", about_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <hr>
+          <p><%= link_to('Logout', destroy_user_session_path, method: :delete, class: "ml-3 dropdown-links txt-medium") %></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+<% else %>
+<!-- Modal -->
+<div class="modal fade" id="notloggedinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen" role="document" style="width:95%; height: 100%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notloggedinModalTitle">SKATEZAR</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: white;">
+          <br>
+          <p><%= link_to("Skatespots 📍", skatespots_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Skate Contests 🛹", skateevents_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Skatedice 🛹", skatedice_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Local Donations 🤝 ", donations_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <hr>
+          <p><%= link_to("Charities 🙏", community_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("About Us", about_path, class: "ml-3 dropdown-links txt-medium") %></p>
+          <br>
+          <p><%= link_to("Login", new_user_session_path, class: "ml-3 dropdown-links txt-medium") %></p>
+       </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+
+<hr>
+<span class="desktop-div">
+<div class=" container d-flex justify-content-between" style="margin-bottom: -15px;">
+  <p><%= link_to("Skatespots", skatespots_path, class: "ml-3 dropdown-links ") %></p>
+
+  <p><%= link_to("Charities", community_path, class: "ml-3 dropdown-links ") %></p>
+
+  <p><%= link_to("Skate Contests", skateevents_path, class: "ml-3 dropdown-links") %></p>
+  <p><%= link_to("Skate Games", skatedice_path, class: "ml-3 dropdown-links ") %></p>
+
+  <p><%= link_to("Donations", donations_path, class: "ml-3 dropdown-links ") %></p>
+
+  <p><%= link_to("About Us", about_path, class: "ml-3 dropdown-links  ") %></p>
+</div>
+<hr>
+<br>
+</span>
+
+
+
+<style type="text/css">
+
+  .txt-medium{
+    font-size:22px;
+  }
+  .search-form-control {
+  position: relative;
+  width:90%;
+  display: block;
+  margin: auto;
+}
+
+.search-form-control .btn {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 8px;
+}
+
+.search-form-control .form-control {
+  height: 3.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border: 1px solid #E7E7E7;
+}
+
+.search-form-control .form-control:focus {
+  border: 1px solid #1EDD88;
+  outline: none !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.header{
+  font-size:18px;
+  letter-spacing: 4px;
+}
+
+
+</style>
+
+
+<!-- check through JS is user is logged in -->
+<% if current_user %>
+  <p id="js-login" data-id="1"></p>
+<% else %>
+  <p id="js-login" data-id="0"></p>
+<% end %>
+
+
+
+

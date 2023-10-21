@@ -1,0 +1,54 @@
+
+<div class="container">
+
+  <h4 class="text-center">All Orders</h4>
+  <div class="d-flex justify-content-around">
+    <%= link_to "PENDING ORDERS", allorderspending_path, class: "btn btn-new money" %>
+    <%= link_to "COMPLETED ORDERS", allorderscompleted_path, class: "btn btn-new" %>
+  </div>
+  <br>
+  <% @allorders.order('created_at DESC').each do |order| %>
+
+  <div class="container p-3" style="border: 1px solid lightgrey; background-color:white;">
+    <div  class="text-center">
+      <h2>ITEM: <%= order.item.title %></h2>
+        <p>COST: <%= order.item.skatezarcoins %> skatezar coins</p>
+        <p>ORDER CREATED: <%= order.created_at %></p>
+        <strong>BUYER</strong>
+        <p><%= order.user.email %> </p>
+        <% if order.user.instagram.present? %>
+          <%= link_to "https://www.instagram.com/#{order.user.instagram}", target: "_blank" do %>
+            <i class="fab fa-instagram mt-2" style="font-size:30px;"></i>
+          <% end %>
+        <% end %>
+        <p><%= order.firstname %> <%= order.lastname %> </p>
+        <p><%= order.address %> </p>
+        <p><%= order.country %> </p>
+        <p><%= order.postalcode %> </p>
+        <p>
+          <% if order.completed == true %>
+            <p>COMPLETED</p>
+          <% else %>
+            <%= link_to "ORDER COMPLETED", ordercompleted_path(order_id: order.id), class: "btn btn-new" %>
+          <% end %>
+        </p>
+        <%= link_to item_skatezarcoinorder_path(order.item, order.id, :order_id => order.id),
+                  method: :delete,
+                  data: { confirm: "Order has been completed?" } do %>
+        <i class="fas fa-trash-alt icons-edit-delete" style="font-size: 50px;  color: #c70000;"></i>
+        <% end %>
+        <br>
+        <br>
+
+    </div>
+    <div>
+      <div class="card-category-img" style="background-image: url(<%= cl_image_path order.item.photo.key, height: 200, crop: :fill %>)"></div>
+    </div>
+  </div>
+  <hr>
+    <br>
+</div>
+
+
+<% end %>
+</div>

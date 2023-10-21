@@ -1,0 +1,97 @@
+
+<h4 class="text-center">
+THE TEAM BEHIND SKATEZAR
+</h4>
+
+
+  <h2>
+    <a style=" display: block; margin: auto; width: 250px;" class="btn btn-white d-flex justify-content-between" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <span>
+        LEVELS
+      </span>
+      <span class="ml-3" style="margin-top:-2px;">
+        +
+      </span>
+    </a>
+  </h2>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body container">
+    <p>
+      <ol>
+        <li>Mongo Pusher: 0 Points</li>
+        <li>Beginner: 0-9 Points </li>
+        <li>Amateur: 10-20 points</li>
+        <li>PRO: 20-50 points</li>
+        <li>Chief Gorilla: 50+ points</li>
+      </ol>
+
+    </p>
+  </div>
+</div>
+
+<br>
+<div class="container">
+  <% @users.order('coins_earned DESC').each do |user| %>
+  <% if user.coins_earned > 0 %>
+
+  <div class="team-member">
+          <% if user.username.present? %>
+            <h2 class="text-center"><%= user.email.match(/[^@]*/) %></h2>
+         <% elsif %>
+            <h2 class="text-center"><%= user.email.match(/[^@]*/) %></h2>
+          <% end %>
+          <br>
+
+      <p class="sub-heading text-center" style="font-size:16.5px;">LEVEL:
+
+           <% if user.coins_earned <= 0 %>
+            <strong>Mongo Pusher</strong>
+          <% elsif user.coins_earned >0 && user.coins_earned <=9 %>
+            <strong>Beginner</strong>
+          <% elsif user.coins_earned > 9 && user.coins_earned <= 20 %>
+            <strong>Amateur</strong>
+          <% elsif user.coins_earned > 20 && user.coins_earned <= 50 %>
+            <strong>Pro</strong>
+          <% elsif user.coins_earned > 50 %>
+            <strong>CHIEF GORILLA</strong>
+          <% end %>
+
+           </p>
+      <div class="d-flex justify-content-around">
+      <% @coins = user.coins_earned - user.coins_expensed %>
+      <div>
+        <%= link_to( 'Profile', showteam_path(user), class: "p-2 money promote-item-btn text-center") %>
+      </div>
+       <% if user.instagram.present? %>
+          <%= link_to "https://www.instagram.com/#{user.instagram}", target: "_blank" do %>
+            <i class="fab fa-instagram m-2" style="font-size:30px;"></i>
+          <% end %>
+        <% end %>
+
+
+      </div>
+
+
+      <h4 class="text-center mt-2">
+        <span style="font-size:13px;">
+          COINS EARNED:
+        </span>
+        <strong class="money-green">
+          +<%= user.coins_earned %>
+        </strong>
+      </h4>
+    </div>
+    <br>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+<style type="text/css">
+  .team-member{
+    background-color: white;
+    border: 1px solid black;
+
+  }
+</style>
